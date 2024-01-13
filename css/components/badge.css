@@ -1,0 +1,49 @@
+.btn-badge {
+  z-index: 9;
+  position: absolute;
+  min-width: 20px;
+  background: var(--danger-color);
+  color: white;
+  font-size: 10px;
+  top: -5px;
+  right: -5px;
+  padding: 2px 4px;
+  border-radius: 50%;
+  border-radius: 15px;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-badge.badge-wave:before {
+  z-index: 8;
+  position: absolute;
+  background: #9796f08a;
+  width: 50px;
+  height: 50px;
+  top: -15px;
+  right: -15px;
+  padding: 5px 8px;
+  border-radius: 50%;
+  content: "";
+  display: block;
+  -webkit-backface-visibility: hidden;
+  animation: wave-animate 4s infinite ease-out;
+}
+
+.btn-badge.badge-wave:after {
+  position: absolute;
+  background: #9796f08a;
+  width: 50px;
+  height: 50px;
+  top: -15px;
+  right: -15px;
+  padding: 5px 8px;
+  border-radius: 50%;
+  content: "";
+  display: block;
+  -webkit-backface-visibility: hidden;
+  opacity: 0;
+  animation: wave-animate 4s 0.8s infinite ease-out;
+}

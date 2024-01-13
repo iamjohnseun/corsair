@@ -1,0 +1,30 @@
+.cta-section {
+  position: relative;
+  margin-bottom: -120px;
+  z-index: 1;
+}
+
+.cta {
+  background-color: #006bff;
+  padding: 40px;
+  border-radius: 5px;
+  /* border-bottom: 1px solid var(--white-color); */
+}
+
+.cta .cta-content {
+  color: #c3c3fd;
+}
+
+.cta .cta-title {
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 14px;
+}
+
+.cta .cta-text {
+  line-height: 1;
+}
+
+.cta .cta-btn {
+  text-align: right;
+}

@@ -1,0 +1,37 @@
+.off-canvas-button{
+  transition:.25s;
+  animation: 2s elastic infinite;
+  padding: var(--padding-sm) var(--padding-lg);
+  position: fixed;
+  font-size: 1.5em;
+  z-index: 20
+}
+
+.off-canvas-button.stick-right{
+  right: 0;
+}
+
+.off-canvas-button.stick-left{
+  left: 0;
+}
+
+.off-canvas-button.stick-top{
+  top: 8%;
+}
+
+.off-canvas-button.stick-bottom{
+  bottom: 8%;
+}
+
+.off-canvas-button.curve{
+  padding: var(--padding-sm) var(--padding-md);
+  border-radius: var(--border-radius-full);
+}
+
+.off-canvas-button.curve-left{
+  border-radius: 2em 0 0 2em;
+}
+
+.off-canvas-button.curve-right{
+  border-radius: 0 2em 2em 0;
+}

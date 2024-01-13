@@ -1,0 +1,152 @@
+.countdown {
+  margin: 2em;
+}
+
+.countdown .time {
+  color: var(--text-color);
+  font-size: 3em;
+  font-family: "Technology" !important;
+}
+
+.countdown.text-modern .time,
+.countdown-circle.text-modern .time {
+  font-family: "Baufra" !important;
+}
+
+.countdown.text-sans .time,
+.countdown-circle.text-sans .time {
+  font-family: "Asap" !important;
+}
+
+.countdown-circle {
+  width: 100px;
+  height: 100px;
+  display: block;
+  position: relative;
+  border-radius: 50%;
+  background-color: var(--text-color);
+  border: 2px solid var(--text-color);
+  border: none !important;
+  margin: 2em;
+  padding: 8px;
+}
+
+.countdown-circle .block {
+  background: var(--white-color);
+  display: block;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  padding: 30%;
+}
+
+.countdown-circle .time {
+  font-size: 3em;
+  border: none !important;
+  background: none !important;
+  text-align: center;
+  font-family: "Technology" !important;
+  width: 100%;
+}
+
+.countdown-circle.countdown-primary,
+.countdown-circle.countdown-primary>.time {
+  background-color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color) !important;
+}
+
+.countdown-circle.countdown-secondary,
+.countdown-circle.countdown-secondary>.time {
+  background-color: var(--secondary-color);
+  border: 2px solid var(--secondary-color);
+  color: var(--secondary-color) !important;
+}
+
+.countdown-circle.countdown-gray,
+.countdown-circle.countdown-gray>.time {
+  background-color: var(--gray-color);
+  border: 2px solid var(--gray-color);
+  color: var(--gray-color) !important;
+}
+
+.countdown-circle.countdown-info,
+.countdown-circle.countdown-info>.time {
+  background-color: var(--info-color);
+  border: 2px solid var(--info-color);
+  color: var(--info-color) !important;
+}
+
+.countdown-circle.countdown-success,
+.countdown-circle.countdown-success>.time {
+  background-color: var(--success-color);
+  border: 2px solid var(--success-color);
+  color: var(--success-color) !important;
+}
+
+.countdown-circle.countdown-error,
+.countdown-circle.countdown-error>.time {
+  background-color: var(--error-color);
+  border: 2px solid var(--error-color);
+  color: var(--error-color) !important;
+}
+
+.countdown-circle.countdown-warning,
+.countdown-circle.countdown-warning>.time {
+  background-color: var(--warning-color);
+  border: 2px solid var(--warning-color);
+  color: var(--warning-color) !important;
+}
+
+.countdown-circle.countdown-danger,
+.countdown-circle.countdown-danger>.time {
+  background-color: var(--danger-color);
+  border: 2px solid var(--danger-color);
+  color: var(--danger-color) !important;
+}
+
+.countdown.countdown-primary,
+.countdown.countdown-primary>.time {
+  color: var(--primary-color) !important;
+}
+
+.countdown.countdown-secondary,
+.countdown.countdown-secondary>.time {
+  color: var(--secondary-color) !important;
+}
+
+.countdown.countdown-gray,
+.countdown.countdown-gray>.time {
+  color: var(--gray-color) !important;
+}
+
+.countdown.countdown-info,
+.countdown.countdown-info>.time {
+  color: var(--info-color) !important;
+}
+
+.countdown.countdown-success,
+.countdown.countdown-success>.time {
+  color: var(--success-color) !important;
+}
+
+.countdown.countdown-error,
+.countdown.countdown-error>.time {
+  color: var(--error-color) !important;
+}
+
+.countdown.countdown-warning,
+.countdown.countdown-warning>.time {
+  color: var(--warning-color) !important;
+}
+
+.countdown.countdown-danger,
+.countdown.countdown-danger>.time {
+  color: var(--danger-color) !important;
+}
+
+.countdown-circle.degree {
+  /*90 + ( 360 * .1 )*/
+  background-image: linear-gradient(90deg, transparent 50%, white 50%), linear-gradient(90deg, white 50%, transparent 50%);
+}

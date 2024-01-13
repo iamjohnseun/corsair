@@ -1,0 +1,114 @@
+:root {
+  /* COLORS */
+  --transparent-color: transparent;
+  --accent-color: #A33A96;
+  --accent-color-2: #696AF6;
+  --accent-color-3: #3544EE;
+  --text-color: #333333;
+  --text-color-2: #626582;
+  --primary-color: #007BFF;
+  --secondary-color: #F1F1F1;
+  --secondary-color-2: #6C757D;
+  --secondary-color-3: #66757f;
+  --secondary-color-4: #afb1be;
+  --gray-color: #F8FAFF;
+  --gray-color-2: #CCD8E0;
+  --dull-white-color: #F9FAFC;
+  --info-color: #26E2FF;
+  --success-color: #4EF18F;
+  --error-color: #F14E4E;
+  --warning-color: #F1BB4E;
+  --danger-color: #FF4040;
+  --white-color: #FFFFFF;
+  --black-color: #333333;
+  --dark-color: #333333;
+  --muted-color: #636C72;
+  --sublime-color: #B6C2C6;
+  --mail-color: #0072c6;
+  --facebook-color: #3b5999;
+  --linkedin-color: #0077b5;
+  --youtube-color: #bb0000;
+  --github-color: #6e5494;
+  --codepen-color: #212121;
+  --steam-color: #7da10e;
+  --snapchat-color: #eec900;
+  --twitter-color: #55acee;
+  --instagram-color: #E1306C;
+  --npmjs-color: #c12127;
+  /* --disabled-color: #f2f2f2; */
+  --disabled-color: #CCCCCC;
+  --inactive-color: #99A3BA;
+  --character-color: #2F2F40;
+  --background-color: var(--white-color);
+  --input-background: var(--background-color);
+  --accent-gradient-1: #667EEA;
+  --accent-gradient-2: #764BA2;
+  --accent-mix: linear-gradient(100deg, var(--primary-color), var(--accent-gradient-1));
+  --tooltip-text-color: #FFFFFF;
+  --tooltip-background-color: #444850;
+  /* USE ALL 3 FOR FALLBACK ON BROWSERS WHEN ANIMATED GRADIENTS ARE USED WITH THE BACKGROUND ATTRIBUTE */
+  --animated-gradient: -webkit-gradient(linear, top left, bottom left, var(--accent-gradient-1), to(var(--accent-gradient-2)));
+  --animated-gradient-fallback-1: -webkit-linear-gradient(var(--accent-gradient-1), var(--accent-gradient-2));
+  --animated-gradient-fallback-2: linear-gradient(var(--accent-gradient-1), var(--accent-gradient-2));
+  /* BORDER & OUTLINE */
+  --border-radius: 0.25rem;
+  --border-radius-sm: 0.125rem;
+  --border-radius-lg: 0.5rem;
+  --border-radius-xl: 1rem;
+  --border-radius-full: 50%;
+  --outline-width: 0.2rem;
+  /* SHADOW */
+  --shadow-xxs: 0px 3px 6px rgba(24, 24, 27, 0.2), 0px 2px 7px rgba(24, 24, 27, 0.4), 0 0 0 1px rgba(24, 24, 27, 0.08);
+  --shadow-xxs-2: 0px 3px 6px rgba(0, 0, 0, 0.5), 0px 8px 15px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  --shadow-xs: 1px 1px 4px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .085), 0 1px 8px rgba(0, 0, 0, .1);
+  --shadow-md: 0 1px 8px rgba(0, 0, 0, .1), 0 8px 24px rgba(0, 0, 0, .15);
+  --shadow-lg: 0 1px 8px rgba(0, 0, 0, .1), 0 16px 48px rgba(0, 0, 0, .1), 0 24px 60px rgba(0, 0, 0, .1);
+  --full-shadow: 0 1px 4px -1px rgba(18, 22, 33, .24);
+  /* PADDING */
+  --padding-lg: 1em !important;
+  --padding-md: 0.6em !important;
+  --padding-sm: 0.3em !important;
+  --padding-input: 10px 12px;
+  /* TRANSITION */
+  --speed-lg: 0.1;
+  --speed-md: 0.2;
+  --speed-sm: 0.3;
+  --easing: ease-out;
+  /* FONT */
+  --font-family: 'Poppins', 'Monaco', 'courier new', 'mono', 'Consolas';
+  --font-size: .85rem;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  /* ICON FONT */
+  --icon-font: 'IconsMind';
+  /* BUTTON */
+  --button-border-radius: var(--border-radius);
+  --button-horizontal-padding: 3rem;
+  --button-vertical-padding: 0.55rem;
+  --button-horizontal-padding-sm: 2rem;
+  --button-vertical-padding-sm: 0.50rem;
+  --button-horizontal-padding-md: 3rem;
+  --button-vertical-padding-md: 0.55rem;
+  --button-horizontal-padding-lg: 4rem;
+  --button-vertical-padding-lg: 1.2rem;
+  --button-height: 2.25rem;
+  --button-width: 12rem;
+  --button-color: #FFFFFF;
+  /*   INPUT */
+  --input-border-radius: 6px;
+  --input-border-color: var(--secondary-color);
+  --input-border-size: .1rem;
+  --input-min-height: 42px;
+  --input-max-height: 52px;
+  /*   LABEL */
+  --label-font-size: .75rem;
+  /* NAV */
+  --nav-color: #F1F1F1;
+  --nav-hover-color: rgba(0, 0, 0, .1);
+  --nav-hover-background: #A33A96;
+  --nav-dropdown-content-background: #F9F9F9;
+}

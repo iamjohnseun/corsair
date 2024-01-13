@@ -1,0 +1,284 @@
+/* DETAILS */
+details.popdown:hover,
+details.accordion:hover {
+  color: var(--text-color);
+}
+
+details p {
+  font-size: var(--font-size);
+  font-weight: normal;
+  margin-top: 10px;
+}
+
+.popdown {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  transition: transform 0.8s ease;
+}
+
+.popdown[open] summary::after {
+  content: "\e641";
+}
+
+.popdown summary::after {
+  font-family: "iconsmind";
+  content: "\e660";
+  display: inline-block;
+  padding-left: 10px;
+  position: relative;
+  vertical-align: middle;
+}
+
+.popdown summary::-webkit-details-marker {
+  display: none;
+}
+
+details.accordion {
+  position: relative;
+  font-size: 1rem;
+}
+
+details.accordion summary {
+  /* text-transform:uppercase; */
+}
+
+details.accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+details.accordion summary::before {
+  font-family: "iconsmind";
+  font-size: 1.5rem;
+  content: "\e60b";
+  position: absolute;
+  right: 0;
+  transition: transform 0.1s linear;
+}
+
+details.accordion summary {
+  /* width: 100%; */
+  padding: 20px;
+  padding-left: 0px;
+  border-bottom: 1px solid #ccc;
+}
+
+details.accordion summary:focus {
+  outline: none;
+}
+
+details.accordion[open] summary:before {
+  transform: rotate(45deg);
+}
+
+details.accordion[open]>summary {
+  color: #007bff;
+}
+
+details.accordion[open]>summary~* {
+  animation: open .8s ease;
+}
+
+/* END DETAILS */
+/* .accordion input[type='radio']:first-child, */
+.accordion input[type='radio']:first-of-type {
+  display: none !important;
+}
+
+.accordion label:first-of-type {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  cursor: pointer;
+  border: 3px solid var(--black-color);
+  user-select: none;
+  margin: auto !important;
+}
+
+.accordion.accordion-rounded label:first-of-type {
+  border-radius: var(--input-border-radius);
+}
+
+.accordion.accordion-primary label:first-of-type {
+  border: 3px solid var(--primary-color) !important;
+}
+
+.accordion.accordion-secondary label:first-of-type {
+  border: 3px solid var(--secondary-color) !important;
+}
+
+.accordion.accordion-success label:first-of-type {
+  border: 3px solid var(--success-color) !important;
+}
+
+.accordion.accordion-warning label:first-of-type {
+  border: 3px solid var(--warning-color) !important;
+}
+
+.accordion.accordion-info label:first-of-type {
+  border: 3px solid var(--info-color) !important;
+}
+
+.accordion.accordion-danger label:first-of-type {
+  border: 3px solid var(--danger-color) !important;
+}
+
+.accordion.accordion-error label:first-of-type {
+  border: 3px solid var(--error-color) !important;
+}
+
+.accordion.accordion-dark label:first-of-type {
+  border: 3px solid var(--dark-color) !important;
+}
+
+.accordion.accordion-muted label:first-of-type {
+  border: 3px solid var(--muted-color) !important;
+}
+
+.accordion.accordion-transparent label:first-of-type {
+  border: 3px solid transparent !important;
+}
+
+.accordion label:first-of-type div:first-child {
+  width: 100%;
+  line-height: 45px;
+  margin-left: 10px;
+  font-size: 1.2em;
+  font-family: inherit;
+}
+
+.accordion label:first-of-type .cross {
+  margin-right: 15px;
+  margin-top: 20px;
+}
+
+.accordion label:first-of-type .cross:before,
+.accordion label:first-of-type .cross:after {
+  content: '';
+  width: 15px;
+  display: block;
+  transition: 0.3s;
+  border-top: 2px solid var(--black-color);
+}
+
+.accordion.accordion-primary label:first-of-type .cross:before,
+.accordion.accordion-primary label:first-of-type .cross:after {
+  border-top: 2px solid var(--primary-color);
+}
+
+.accordion.accordion-secondary label:first-of-type .cross:before,
+.accordion.accordion-secondary label:first-of-type .cross:after {
+  border-top: 2px solid var(--secondary-color);
+}
+
+.accordion.accordion-success label:first-of-type .cross:before,
+.accordion.accordion-success label:first-of-type .cross:after {
+  border-top: 2px solid var(--success-color);
+}
+
+.accordion.accordion-warning label:first-of-type .cross:before,
+.accordion.accordion-warning label:first-of-type .cross:after {
+  border-top: 2px solid var(--warning-color);
+}
+
+.accordion.accordion-info label:first-of-type .cross:before,
+.accordion.accordion-info label:first-of-type .cross:after {
+  border-top: 2px solid var(--info-color);
+}
+
+.accordion.accordion-danger label:first-of-type .cross:before,
+.accordion.accordion-danger label:first-of-type .cross:after {
+  border-top: 2px solid var(--danger-color);
+}
+
+.accordion.accordion-error label:first-of-type .cross:before,
+.accordion.accordion-error label:first-of-type .cross:after {
+  border-top: 2px solid var(--error-color);
+}
+
+.accordion.accordion-dark label:first-of-type .cross:before,
+.accordion.accordion-dark label:first-of-type .cross:after {
+  border-top: 2px solid var(--dark-color);
+}
+
+.accordion.accordion-muted label:first-of-type .cross:before,
+.accordion.accordion-muted label:first-of-type .cross:after {
+  border-top: 2px solid var(--muted-color);
+}
+
+.accordion.accordion-primary label:first-of-type div:first-child {
+  color: var(--primary-color);
+}
+
+.accordion.accordion-secondary label:first-of-type div:first-child {
+  color: var(--secondary-color);
+}
+
+.accordion.accordion-success label:first-of-type div:first-child {
+  color: var(--success-color);
+}
+
+.accordion.accordion-warning label:first-of-type div:first-child {
+  color: var(--warning-color);
+}
+
+.accordion.accordion-info label:first-of-type div:first-child {
+  color: var(--info-color);
+}
+
+.accordion.accordion-danger label:first-of-type div:first-child {
+  color: var(--danger-color);
+}
+
+.accordion.accordion-error label:first-of-type div:first-child {
+  color: var(--error-color);
+}
+
+.accordion.accordion-dark label:first-of-type div:first-child {
+  color: var(--dark-color);
+}
+
+.accordion.accordion-muted label:first-of-type div:first-child {
+  color: var(--muted-color);
+}
+
+.cross:after {
+  transform: rotate(90deg);
+  margin-top: -2px;
+}
+
+.accordion .content {
+  box-sizing: border-box;
+  font-size: 0.9em;
+  margin: 10px 10px;
+  margin: 5px 10px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height, .5s;
+}
+
+.accordion input[type='radio']:first-of-type:checked~.content {
+  max-height: 400px;
+  transition: max-height, 1s;
+}
+
+.accordion input[type='radio']:first-of-type:checked~label .cross:before {
+  transform: rotate(180deg);
+}
+
+.accordion input[type='radio']:first-of-type:checked~label .cross:after {
+  transform: rotate(0deg);
+}
+
+.accordion .accordion {
+  margin-top: 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height, .5s;
+}
+
+.accordion .accordion label:first-of-type {
+  border: none;
+  box-shadow: none;
+  margin: 0;
+}

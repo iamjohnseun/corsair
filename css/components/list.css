@@ -1,0 +1,163 @@
+.arrow {
+  position: relative;
+}
+
+.arrow li {
+  padding-left: 20px;
+  line-height: 35px;
+}
+
+.arrow li:before {
+  font-family: 'Font Awesome\ 5 Free';
+  font-weight: 900;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  font-size: 12px;
+  color: #22de99;
+  content: '\f058';
+  font-style: initial;
+}
+
+.angle-right {
+  position: relative;
+}
+
+.angle-right li {
+  padding-left: 18px;
+  line-height: 30px;
+}
+
+.angle-right li:before {
+  font-family: 'Font Awesome\ 5 Free';
+  font-weight: 900;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  font-size: 12px;
+  color: #01d486;
+  content: '\f105';
+  font-style: initial;
+}
+
+.check {
+  position: relative;
+}
+
+.check li {
+  padding-left: 24px;
+  line-height: 30px;
+}
+
+.check li:before {
+  font-family: 'Font Awesome\ 5 Free';
+  font-weight: 900;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  font-size: 12px;
+  color: #80829a;
+  content: '\f00c';
+  font-style: initial;
+}
+
+.close-icon {
+  position: relative;
+}
+
+.close-icon li {
+  padding-left: 24px;
+  line-height: 30px;
+}
+
+.close-icon li:before {
+  font-family: 'Font Awesome\ 5 Free';
+  font-weight: 900;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  font-size: 12px;
+  color: #ec3636;
+  content: '\f00d';
+  font-style: initial;
+}
+
+.angle {
+  position: relative;
+}
+
+.angle li {
+  padding-left: 20px;
+  line-height: 30px;
+}
+
+.angle li:before {
+  font-family: 'Font Awesome\ 5 Free';
+  font-weight: 900;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  font-size: 13px;
+  color: #d2d3d8;
+  content: '\f061';
+  font-style: initial;
+}
+
+.plus-circle {
+  position: relative;
+}
+
+.plus-circle li {
+  padding-left: 20px;
+  line-height: 35px;
+}
+
+.plus-circle li:before {
+  font-family: 'Font Awesome\ 5 Free';
+  font-weight: 900;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  font-size: 13px;
+  color: #3544ee;
+  content: '\f055';
+  font-style: initial;
+}
+
+/*----- Bullet List -----*/
+.bullet-list {}
+
+.bullet-list ul {
+  margin: 0px;
+  padding: 0px;
+}
+
+.bullet-list ul li {}
+
+.divider-line {
+  border: 1px solid transparent;
+}
+
+.divider-dashed-line {
+  border: 1px dashed transparent;
+}
+
+.divider-primary {
+  border-color: #032fdf;
+}
+
+.divider-secondary {
+  border-color: #fa5826;
+}
+
+.divider-brand {
+  border-color: #01d486;
+}
+
+.divider-dark {
+  border-color: #181825;
+}
+
+.divider-light {
+  border-color: #e0e0e6;
+}

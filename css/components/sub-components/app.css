@@ -1,0 +1,99 @@
+.app-wrapper {
+  position: relative;
+  background: #E4E9F7;
+  left: 260px;
+  width: calc(100% - 260px);
+  height: 100vh;
+  transition: all 0.5s ease;
+
+  left: 78px;
+  width: calc(100% - 78px);
+}
+
+.app-menu .sidebar.closed~.app-wrapper,
+.app-wrapper.nav-open {
+  left: 78px;
+  width: calc(100% - 78px);
+
+  left: 260px;
+  width: calc(100% - 260px);
+}
+
+.app-wrapper .menu-toggle,
+.app-wrapper .nav-icon {
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.app-wrapper .menu-toggle .nav-icon,
+.app-wrapper .nav-icon {
+  display: inline-block;
+  top: 0px;
+  position: relative;
+  margin-top: 10px;
+  min-width: 50px;
+  min-height: 50px;
+  padding: 0px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.app-wrapper .menu-toggle i,
+.app-wrapper .menu-toggle .text {
+  color: #11101d;
+  font-size: 35px;
+}
+
+.app-wrapper .menu-toggle .text {
+  font-size: 26px;
+  font-weight: 600;
+  margin: -10px 0 0 10px;
+}
+
+.app-wrapper .nav-icon .topbar,
+.app-wrapper .nav-icon .middlebar,
+.app-wrapper .nav-icon .bottombar {
+  height: 2.5px;
+  background: #11101d;
+}
+
+.app-wrapper.nav-open .nav-icon {
+  margin-top: 5px;
+}
+
+.app-wrapper.nav-open .nav-icon .topbar {
+  top: 21px;
+  transform: rotate(45deg);
+}
+
+.app-wrapper.nav-open .nav-icon .middlebar {
+  width: 0;
+  top: 22px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(30px);
+}
+
+.app-wrapper.nav-open .nav-icon .bottombar {
+  top: 21px;
+  transform: rotate(-45deg);
+}
+
+@media screen and (max-width: 736px) and (orientation: landscape) {
+
+  .app-wrapper .menu-toggle .topbar,
+  .app-wrapper .menu-toggle .middlebar,
+  .app-wrapper .menu-toggle .bottombar {
+    width: 35px !important;
+  }
+}
+
+@media screen and (max-width: 44em) {
+
+  .app-wrapper .menu-toggle .topbar,
+  .app-wrapper .menu-toggle .middlebar,
+  .app-wrapper .menu-toggle .bottombar {
+    width: 35px !important;
+  }
+}

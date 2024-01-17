@@ -1,0 +1,143 @@
+.pagination {
+  display: flex;
+  min-height: 20px;
+  position: relative;
+}
+
+.pagination button {
+  -webkit-appearance: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  outline: 0 !important;
+}
+
+.pagination .paginate {
+  display: inline-flex;
+  position: relative;
+  width: 20%;
+  height: auto;
+  cursor: pointer;
+  transform: translate3d(0, 0, 0);
+  /* -webkit-filter: drop-shadow(0 2px 0px rgba(0, 0, 0, 0.2)); */
+}
+
+.pagination .paginate i {
+  position: absolute;
+  top: 40%;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  border-radius: 2.5px;
+  background: var(--primary-color);
+  transition: all 0.15s ease;
+}
+
+.pagination .paginate.left {
+  /* right: 58%; */
+}
+
+.pagination .paginate.left i {
+  transform-origin: 0% 50%;
+}
+
+.pagination .paginate.left i:first-child {
+  transform: translate(0, -1px) rotate(40deg);
+}
+
+.pagination .paginate.left i:last-child {
+  transform: translate(0, 1px) rotate(-40deg);
+}
+
+.pagination .paginate.left:hover i:first-child {
+  transform: translate(0, -1px) rotate(30deg);
+}
+
+.pagination .paginate.left:hover i:last-child {
+  transform: translate(0, 1px) rotate(-30deg);
+}
+
+.pagination .paginate.left:active i:first-child {
+  transform: translate(1px, -1px) rotate(25deg);
+}
+
+.pagination .paginate.left:active i:last-child {
+  transform: translate(1px, 1px) rotate(-25deg);
+}
+
+.pagination .paginate.left[data-state=disabled] i:first-child {
+  transform: translate(-5px, 0) rotate(0deg);
+}
+
+.pagination .paginate.left[data-state=disabled] i:last-child {
+  transform: translate(-5px, 0) rotate(0deg);
+}
+
+.pagination .paginate.left[data-state=disabled]:hover i:first-child {
+  transform: translate(-5px, 0) rotate(0deg);
+}
+
+.pagination .paginate.left[data-state=disabled]:hover i:last-child {
+  transform: translate(-5px, 0) rotate(0deg);
+}
+
+.pagination .paginate.right {
+  /* left: 58%; */
+}
+
+.pagination .paginate.right i {
+  transform-origin: 100% 50%;
+}
+
+.pagination .paginate.right i:first-child {
+  transform: translate(0, 1px) rotate(40deg);
+}
+
+.pagination .paginate.right i:last-child {
+  transform: translate(0, -1px) rotate(-40deg);
+}
+
+.pagination .paginate.right:hover i:first-child {
+  transform: translate(0, 1px) rotate(30deg);
+}
+
+.pagination .paginate.right:hover i:last-child {
+  transform: translate(0, -1px) rotate(-30deg);
+}
+
+.pagination .paginate.right:active i:first-child {
+  transform: translate(1px, 1px) rotate(25deg);
+}
+
+.pagination .paginate.right:active i:last-child {
+  transform: translate(1px, -1px) rotate(-25deg);
+}
+
+.pagination .paginate.right[data-state=disabled] i:first-child {
+  transform: translate(5px, 0) rotate(0deg);
+}
+
+.pagination .paginate.right[data-state=disabled] i:last-child {
+  transform: translate(5px, 0) rotate(0deg);
+}
+
+.pagination .paginate.right[data-state=disabled]:hover i:first-child {
+  transform: translate(5px, 0) rotate(0deg);
+}
+
+.pagination .paginate.right[data-state=disabled]:hover i:last-child {
+  transform: translate(5px, 0) rotate(0deg);
+}
+
+.pagination .paginate[data-state=disabled] {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.pagination .counter {
+  text-align: center;
+  width: 100%;
+  /* text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.2); */
+  color: var(--primary-color);
+  font-family: 'Asap';
+  font-weight: 600;
+}

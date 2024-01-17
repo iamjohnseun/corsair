@@ -1,0 +1,243 @@
+progress {
+  width: 100%;
+  height: 10px;
+  margin: 10px auto;
+  display: block;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  overflow: hidden;
+  color: var(--text-color);
+  animation: animate-progress-stripes 5s linear infinite;
+  -webkit-animation: animate-progress-stripes 5s linear infinite;
+  -moz-animation: animate-progress-stripes 5s linear infinite;
+}
+
+progress::-webkit-progress-bar {
+  background: var(--gray-color);
+  border-radius: 50px;
+  padding: 0px 2px;
+  box-shadow: 0 1px 0px 0 rgba(255, 255, 255, 0.5);
+}
+
+progress::-moz-progress-bar {
+  background: var(--gray-color);
+  border-radius: 50px;
+  padding: 0px 2px;
+  box-shadow: 0 1px 0px 0 rgba(255, 255, 255, 0.5);
+}
+
+progress::-webkit-progress-value {
+  border-radius: 50px;
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+progress::-moz-progress-value {
+  border-radius: 50px;
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.progress-primary progress::-webkit-progress-value {
+  background-color: var(--accent-gradient-2);
+  background-image: var(--accent-mix);
+  animation: animate-progress-stripes 5s linear infinite;
+  -webkit-animation: animate-progress-stripes 5s linear infinite;
+}
+
+.progress-primary progress::-moz-progress-value {
+  background-color: var(--accent-gradient-2);
+  background-image: var(--accent-mix);
+  animation: animate-progress-stripes 5s linear infinite;
+  -moz-animation: animate-progress-stripes 5s linear infinite;
+}
+
+.progress-secondary progress::-webkit-progress-value {
+  background-color: var(--secondary-color-2) !important;
+}
+
+.progress-secondary progress::-moz-progress-value {
+  background-color: var(--secondary-color-2) !important;
+}
+
+.progress-success progress::-webkit-progress-value {
+  background-color: var(--success-color) !important;
+}
+
+.progress-success progress::-moz-progress-value {
+  background-color: var(--success-color) !important;
+}
+
+.progress-info progress::-webkit-progress-value {
+  background-color: var(--info-color) !important;
+}
+
+.progress-info progress::-moz-progress-value {
+  background-color: var(--info-color) !important;
+}
+
+.progress-error progress::-webkit-progress-value {
+  background-color: var(--error-color) !important;
+}
+
+.progress-error progress::-moz-progress-value {
+  background-color: var(--error-color) !important;
+}
+
+.progress-warning progress::-webkit-progress-value {
+  background-color: var(--warning-color) !important;
+}
+
+.progress-warning progress::-moz-progress-value {
+  background-color: var(--warning-color) !important;
+}
+
+.progress-danger progress::-webkit-progress-value {
+  background-color: var(--danger-color) !important;
+}
+
+.progress-danger progress::-moz-progress-value {
+  background-color: var(--danger-color) !important;
+}
+
+.progress-accent progress::-webkit-progress-value {
+  background-color: var(--accent-color) !important;
+}
+
+.progress-accent progress::-moz-progress-value {
+  background-color: var(--accent-color) !important;
+}
+
+.progress-striped progress::-webkit-progress-value {
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent) !important;
+  background-size: 1rem 1rem !important;
+}
+
+.progress-striped progress::-moz-progress-value {
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent) !important;
+  background-size: 1rem 1rem !important;
+}
+
+.progress-animated progress::-webkit-progress-value {
+  transition: width 1.8s;
+}
+
+.progress-animated progress::-moz-progress-bar {
+  transition: padding-bottom 1.8s;
+  transform-origin: 0 0;
+  transform: rotate(-90deg) translateX(-60px);
+}
+
+.progress-show .value {
+  position: relative;
+  transition: all 1.8s;
+}
+
+.progress-circle {
+  height: 6rem;
+  position: relative;
+  width: 6rem;
+  border-radius: 50%;
+  margin: 5px 0;
+  display: inline-block;
+}
+
+.progress-circle-md{
+  height: 12em !important;
+  width: 12em !important;
+}
+
+.progress-circle-lg{
+  height: 15em !important;
+  width: 15em !important;
+}
+
+.progress-circle .value {
+  background-color: transparent;
+  border: 0;
+  bottom: 0;
+  font-weight: 200;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 41.5%;
+  width: 3.5rem;
+  color: var(--primary-color) !important;
+}
+
+.progress-circle-svg {
+  border-radius: 50%;
+  height: 100%;
+  width: 100%;
+}
+
+.progress-circle-overlay {
+  stroke: var(--primary-color);
+  stroke-width: 20;
+  fill: none;
+  transition: all 1.8s;
+}
+
+.progress-circle-underlay {
+  stroke: var(--gray-color);
+  stroke-width: 20;
+  fill: none;
+}
+
+.progress-primary .progress-circle-overlay {
+  stroke: var(--primary-color) !important;
+}
+
+.progress-primary .value{
+  color:  var(--primary-color) !important;
+}
+
+.progress-secondary .progress-circle-overlay {
+  stroke: var(--secondary-color-2) !important;
+}
+
+.progress-secondary .value{
+  color:  var(--secondary-color-2) !important;
+}
+
+.progress-success .progress-circle-overlay {
+  stroke: var(--success-color) !important;
+}
+
+.progress-success .value{
+  color:  var(--success-color) !important;
+}
+
+.progress-info .progress-circle-overlay {
+  stroke: var(--info-color) !important;
+}
+
+.progress-info .value{
+  color:  var(--info-color) !important;
+}
+
+.progress-error .progress-circle-overlay {
+  stroke: var(--error-color) !important;
+}
+
+.progress-error .value{
+  color:  var(--error-color) !important;
+}
+
+.progress-warning .progress-circle-overlay {
+  stroke: var(--danger-color) !important;
+}
+
+.progress-warning .value{
+  color:  var(--warning-color) !important;
+}
+
+.progress-accent .progress-circle-overlay {
+  stroke: var(--accent-color) !important;
+}
+
+.progress-accent .value{
+  color:  var(--accent-color) !important;
+}

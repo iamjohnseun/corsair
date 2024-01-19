@@ -566,16 +566,19 @@ $(function () {
     $(this).closest(".user-card-mini").toggleClass("user-card-mini-active");
   });
 });
+
 $(function () {
   $(".app-nav .sidebar header").on("click", function () {
     $(this).parent().parent().toggleClass("app-nav-mini");
   });
 });
+
 $(function () {
   $(".navbar").prepend(
     '<section class="nav-icon"><span class="topbar"></span><span class="middlebar"></span><span class="bottombar"></span></section>'
   );
 });
+
 $(function () {
   if ($(".app-wrapper .menu-toggle").length) {
     $(".app-wrapper .menu-toggle").prepend(
@@ -587,6 +590,13 @@ $(function () {
     );
   }
 });
+
+$(function () {
+  $(".password-toggle").each(function () {
+    $(this).append('<span class="togglePassword input-element">a</span>');
+  });
+});
+
 $(function () {
   $(".nav .slideout-nav").each(function () {
     var navigation = $(this);
@@ -828,21 +838,6 @@ $(function () {
 });
 
 $(function () {
-  $(".team-wrapper .image-card, .team-wrapper .expand-btn").click(function () {
-    var btn = $(this).parents().find(".expand-btn");
-    var description = btn.parent().find(".role-description");
-    var imagecard = btn.parent().find(".image-card");
-    var info = btn.parent().find(".team-info");
-    var infodes = btn.parent().find(".team-info-des");
-    description.toggleClass("expand");
-    btn.toggleClass("move-button");
-    imagecard.toggleClass("color-reveal");
-    info.toggleClass("text-reduce");
-    infodes.toggleClass("text-reveal");
-  });
-});
-
-$(function () {
   $(".color-input input").each(function () {
     var elem = $(this);
     var preview = elem.siblings(".color-preview");
@@ -856,6 +851,21 @@ $(function () {
         }
       }
     });
+  });
+});
+
+$(function () {
+  $(".team-wrapper .image-card, .team-wrapper .expand-btn").click(function () {
+    var btn = $(this).parents().find(".expand-btn");
+    var description = btn.parent().find(".role-description");
+    var imagecard = btn.parent().find(".image-card");
+    var info = btn.parent().find(".team-info");
+    var infodes = btn.parent().find(".team-info-des");
+    description.toggleClass("expand");
+    btn.toggleClass("move-button");
+    imagecard.toggleClass("color-reveal");
+    info.toggleClass("text-reduce");
+    infodes.toggleClass("text-reveal");
   });
 });
 
@@ -909,7 +919,7 @@ $(function () {
 });
 
 $(function () {
-  $(".character-count").each(function () {
+  $(".form-elements .character-count").each(function () {
     $(this).prepend('<span class="counter "></span>');
     var textarea = $(this).find("textarea");
     var counter = $(this).find(".counter");
@@ -1201,7 +1211,9 @@ $(function () {
     '.form-elements input[type="password"], .form-elements .password-input'
   ).each(function () {
     var elem = $(this);
-    elem.wrap("<div class='password-strength-validator password-toggle'></div>");
+    elem.wrap(
+      "<div class='password-strength-validator password-toggle'></div>"
+    );
   });
 });
 
@@ -1293,7 +1305,9 @@ $(function () {
 
 $(function () {
   $(".password-toggle").each(function () {
-    $(this).append('<span class="togglePassword input-element"><i class="ri-eye-line"></i></span>');
+    $(this).append(
+      '<span class="togglePassword input-element"><i class="ri-eye-line"></i></span>'
+    );
   });
 });
 
@@ -1385,12 +1399,32 @@ $(function () {
     elem.addClass("phone numeric validate");
     elem.attr("maxlength", "15");
     elem.on("keypress keyup paste blur", function (event) {
-      // $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
       if (
         (event.which != 46 || $(this).val().indexOf(".") != -1) &&
         (event.which < 48 || event.which > 57)
       ) {
+        // $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
         event.preventDefault();
+      }
+    });
+
+    elem.on("keydown", function (event) {
+      if (event.key === "Backspace" || event.keyCode === 8) {
+        if (elem.parents(".input-addon").length) {
+          if ($.trim(elem.val()).length === 0) {
+            var parent = elem.parents(".input-addon");
+            var phonecode = parent.find(".phonecode");
+            if (phonecode.val().length > 0) {
+              phonecode.val(function (_, value) {
+                return value.slice(0, -1);
+              });
+            } else {
+              phonecode.focus().val(function (_, value) {
+                return value + event.key;
+              });
+            }
+          }
+        }
       }
     });
 
@@ -1402,7 +1436,7 @@ $(function () {
       elem
         .parents(".input-addon")
         .prepend(
-          '<div class="input-addon-item"><div class="select-box select-icon-left" data-placeholder="US +1" data-type="tel" data-value="" data-class="select-input tel-select-input tel phonecode" data-name=""><div class="select phone-dropdown-select"><ul></ul></div></div></div>'
+          '<div class="input-addon-item"><div class="select-box select-icon-left" data-placeholder="US +1" data-type="tel" data-value="" data-class="select-input tel-select-input tel phonecode numeric" data-name=""><div class="select phone-dropdown-select"><ul></ul></div></div></div>'
         );
       var addon = elem.siblings(".input-addon-item");
       var clone = parent.find(".input-tel-clone");
@@ -1520,6 +1554,19 @@ $(function () {
     //   }
     // });
   });
+
+  $(document).on("click", ".form-elements .tel-select-input", function () {
+    $(this).val("").trigger("change");
+    var parent = $(this).parents(".input-phone-addon");
+    var elem = parent.find(".select-box");
+    var menu = elem.find(".select");
+    var option = menu.find(".option");
+    option.each(function (index, value) {
+      $(value).show();
+    });
+    elem.addClass("show-options");
+    menu.attr("aria-hidden", true);
+  });
 });
 
 $(function () {
@@ -1531,6 +1578,7 @@ $(function () {
       }
     });
   });
+
   $(
     '<div class="input-number-mask"><div class="input-number-spinner spinner-up">+</div><div class="input-number-spinner spinner-down">-</div></div>'
   ).insertAfter(".input-number");
@@ -1650,23 +1698,19 @@ $(function () {
 });
 
 $(function () {
-  $();
-});
-
-$(function () {
   $(".select-box").each(function () {
     var elem = $(this);
     if (elem.hasClass("select-icon-right")) {
       elem.prepend(
         '<div class="form-elements input-icon-right"><input type="text" class="select-input" autocomplete="' +
           generateHEX() +
-          '" autocorrect="off" /><a class="dropdown-btn"><span class="input-icon"><i class="icon-Arrow-Down va-m"></i></span></a></div>'
+          '" autocorrect="off" /><a class="dropdown-btn"><span class="input-icon"><i class="ri-arrow-down-s-line"></i></span></a></div>'
       );
     } else {
       elem.prepend(
         '<div class="form-elements input-icon-left"><input type="text" class="select-input" autocomplete="' +
           generateHEX() +
-          '" autocorrect="off" /><a class="dropdown-btn"><span class="input-icon"><i class="icon-Arrow-Down va-m"></i></span></a></div>'
+          '" autocorrect="off" /><a class="dropdown-btn"><span class="input-icon"><i class="ri-arrow-down-s-line"></i></span></a></div>'
       );
     }
     var btn = elem.find(".dropdown-btn .input-icon");
@@ -1739,7 +1783,12 @@ $(function () {
       btn.removeClass("dropdown-btn-open");
     });
 
-    input.on("input", function () {
+    input.on("keyup keydown paste focus", function (e) {
+      if (input.hasClass("tel-select-input")) {
+        if (e.keyCode === 32) {
+          return;
+        }
+      }
       var option = $(this).parent().siblings(".select").find(".option");
       option.removeClass("selected");
       var filter = $(input).val();
@@ -1787,37 +1836,6 @@ $(function () {
     elem.attr("aria-hidden", "true");
   });
 });
-
-var countryData;
-function updateCountryDropdown(elem, searchTerm = "") {
-  if ($(elem).length) {
-    var filteredOptions = countryData.filter(function (country) {
-      var countryName = country.name.toLowerCase();
-      var countryISO = country.iso2.toLowerCase();
-      return countryName.includes(searchTerm) || countryISO === searchTerm;
-    });
-
-    var dropdownContent = filteredOptions.map(function (country) {
-      return (
-        "<li role='presentation' class='option' data-name='" +
-        country.name +
-        "' data-iso2='" +
-        country.iso2 +
-        "'>" +
-        "<div class='country-flag-wrapper'><img class='flag' src='" +
-        country.flag +
-        "' /></div>" +
-        "<strong>" +
-        country.name +
-        "</strong><span class='badge'>" +
-        country.iso2 +
-        "</span></li>"
-      );
-    });
-
-    $(elem).html(dropdownContent.join(""));
-  }
-}
 
 $(function () {
   $('.form-elements input[type="country"], .form-elements .country-input').each(
@@ -2171,137 +2189,6 @@ function setProgressCircle(elem, val = null) {
   drawProgressCircle(elem, percentage);
 }
 
-var CorsairAlert = function (option, id = ".corsair-notification-area") {
-  this.show = function (msg, bg = "white", title = "") {
-    if (msg === "" || typeof msg === "undefined" || msg === null) {
-      throw '"Empty Notification"';
-    } else {
-      var alertArea = document.querySelector(id);
-      var alertBox = document.createElement("DIV");
-      var alertTitle = document.createElement("H4");
-      var alertContent = document.createElement("DIV");
-      var alertClose = document.createElement("A");
-      var alertClass = this;
-      alertContent.classList.add("content");
-      alertTitle.classList.add("title");
-      alertTitle.innerHTML = title;
-      alertContent.innerHTML = msg;
-      alertClose.classList.add("close");
-      alertClose.setAttribute("href", "#");
-      alertBox.classList.add("notification");
-      alertBox.classList.add("bg-" + bg.toLowerCase());
-      alertBox.appendChild(alertTitle);
-      alertBox.appendChild(alertContent);
-      if (
-        !option.hideCloseButton ||
-        typeof option.hideCloseButton === "undefined"
-      ) {
-        alertBox.appendChild(alertClose);
-      }
-      alertArea.appendChild(alertBox);
-      alertClose.addEventListener("click", function (event) {
-        event.preventDefault();
-        alertClass.hide(alertBox);
-      });
-      if (!option.persistent) {
-        var alertTimeout = setTimeout(function () {
-          alertClass.hide(alertBox);
-          clearTimeout(alertTimeout);
-        }, option.closeTime);
-      }
-    }
-  };
-  this.hide = function (alertBox) {
-    alertBox.classList.add("hide");
-    var disperseTimeout = setTimeout(function () {
-      // alertBox.parentNode.removeChild(alertBox);
-      alertClass.hide(alertBox);
-      clearTimeout(disperseTimeout);
-    }, 500);
-  };
-};
-
-var corsairAlert = new CorsairAlert({
-  closeTime: 5000,
-  persistent: !1,
-  hideCloseButton: !1,
-});
-
-var corsairAlertPersistent = new CorsairAlert({
-  closeTime: 5000,
-  persistent: !0,
-  hideCloseButton: !1,
-});
-
-var Notify = function (option, id = "body") {
-  this.show = function (msg, bg = "white", title = "", logo = "") {
-    if (msg === "" || typeof msg === "undefined" || msg === null) {
-      throw '"Empty Notification"';
-    } else {
-      var alertArea = document.querySelector(id);
-      var alertBox = document.createElement("DIV");
-      var alertHeader = document.createElement("DIV");
-      var alertImage = document.createElement("IMG");
-      var alertLogo = document.createElement("DIV");
-      var alertTitle = document.createElement("DIV");
-      var alertContent = document.createElement("DIV");
-      var alertDescription = document.createElement("DIV");
-      var alertClose = document.createElement("A");
-      var alertClass = this;
-      alertImage.setAttribute("src", logo);
-      alertLogo.classList.add("logo");
-      alertContent.classList.add("content");
-      alertTitle.classList.add("title");
-      alertHeader.classList.add("header");
-      alertDescription.classList.add("description");
-      alertTitle.innerHTML = title;
-      alertDescription.innerHTML = msg;
-      alertClose.classList.add("close");
-      alertClose.setAttribute("href", "#");
-      alertBox.classList.add("notify");
-      alertBox.classList.add("bg-" + bg.toLowerCase());
-      if (
-        !option.hideCloseButton ||
-        typeof option.hideCloseButton === "undefined"
-      ) {
-        alertBox.appendChild(alertClose);
-      }
-      alertContent.appendChild(alertTitle);
-      alertLogo.appendChild(alertImage);
-      alertHeader.appendChild(alertLogo);
-      alertContent.appendChild(alertDescription);
-      alertHeader.appendChild(alertContent);
-      alertBox.appendChild(alertHeader);
-
-      alertArea.appendChild(alertBox);
-      alertClose.addEventListener("click", function (event) {
-        event.preventDefault();
-        alertClass.hide(alertBox);
-      });
-      if (!option.persistent) {
-        var alertTimeout = setTimeout(function () {
-          alertClass.hide(alertBox);
-          clearTimeout(alertTimeout);
-        }, option.closeTime * 2);
-      }
-    }
-  };
-  this.hide = function (alertBox) {
-    alertBox.classList.add("hide");
-    var disperseTimeout = setTimeout(function () {
-      // alertBox.parentNode.removeChild(alertBox);
-      alertClass.hide(alertBox);
-      clearTimeout(disperseTimeout);
-    }, 500);
-  };
-};
-
-const notify = new Notify({
-  closeTime: 5000,
-  persistent: !1,
-  hideCloseButton: !1,
-});
-
 function setupTypewriter(t) {
   var HTML = t.innerHTML;
 
@@ -2368,49 +2255,6 @@ function setupTypewriter(t) {
   };
 }
 
-var TxtType = function (el, toRotate, period) {
-  this.toRotate = toRotate;
-  this.el = el;
-  this.loopNum = 0;
-  this.period = parseInt(period, 10) || 2000;
-  this.txt = "";
-  this.tick();
-  this.isDeleting = false;
-};
-
-TxtType.prototype.tick = function () {
-  var i = this.loopNum % this.toRotate.length;
-  var fullTxt = this.toRotate[i];
-
-  if (this.isDeleting) {
-    this.txt = fullTxt.substring(0, this.txt.length - 1);
-  } else {
-    this.txt = fullTxt.substring(0, this.txt.length + 1);
-  }
-
-  this.el.innerHTML = '<span class="text-wrap">' + this.txt + "</span>";
-
-  var that = this;
-  var delta = 200 - Math.random() * 100;
-
-  if (this.isDeleting) {
-    delta /= 2;
-  }
-
-  if (!this.isDeleting && this.txt === fullTxt) {
-    delta = this.period;
-    this.isDeleting = true;
-  } else if (this.isDeleting && this.txt === "") {
-    this.isDeleting = false;
-    this.loopNum++;
-    delta = 500;
-  }
-
-  setTimeout(function () {
-    that.tick();
-  }, delta);
-};
-
 function updatePie(elem, percent) {
   var deg;
   var totaltime = elem.data("count");
@@ -2436,20 +2280,22 @@ function updatePie(elem, percent) {
   }
 }
 
-// function sortTable(table, col, reverse) {
-//   var tb = table.tBodies[0], // use `<tbody>` to ignore `<thead>` and `<tfoot>` rows
-//     tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
-//     i;
-//   reverse = -((+reverse) || -1);
-//   tr = tr.sort(function(a, b) { // sort rows
-//     return reverse // `-1 *` if want opposite order
-//       *
-//       (a.cells[col].textContent.trim() // using `.textContent.trim()` for test
-//         .localeCompare(b.cells[col].textContent.trim())
-//       );
-//   });
-//   for (i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
-// }
+var countryData;
+function updateCountryDropdown(elem, searchTerm = "") {
+  if ($(elem).length) {
+    var filteredOptions = countryData.filter(function (country) {
+      var countryName = country.name.toLowerCase();
+      var countryISO = country.iso2.toLowerCase();
+      return countryName.includes(searchTerm) || countryISO === searchTerm;
+    });
+
+    var dropdownContent = filteredOptions.map(function (country) {
+      return ("<li role='presentation' class='option' data-name='" + country.name + "' data-iso2='" + country.iso2 + "'>" + "<div class='country-flag-wrapper'><img class='flag' src='" + country.flag + "' /></div>" + "<strong>" + country.name + "</strong><span class='badge'>" + country.iso2 + "</span></li>");
+    });
+
+    $(elem).html(dropdownContent.join(""));
+  }
+}
 
 function sortTable(table, col, reverse) {
   var tb = table.tBodies[0],
@@ -2839,3 +2685,177 @@ function validate(elem) {
   }
   return result;
 }
+
+var TxtType = function (el, toRotate, period) {
+  this.toRotate = toRotate;
+  this.el = el;
+  this.loopNum = 0;
+  this.period = parseInt(period, 10) || 2000;
+  this.txt = "";
+  this.tick();
+  this.isDeleting = false;
+};
+
+TxtType.prototype.tick = function () {
+  var i = this.loopNum % this.toRotate.length;
+  var fullTxt = this.toRotate[i];
+
+  if (this.isDeleting) {
+    this.txt = fullTxt.substring(0, this.txt.length - 1);
+  } else {
+    this.txt = fullTxt.substring(0, this.txt.length + 1);
+  }
+
+  this.el.innerHTML = '<span class="text-wrap">' + this.txt + "</span>";
+
+  var that = this;
+  var delta = 200 - Math.random() * 100;
+
+  if (this.isDeleting) {
+    delta /= 2;
+  }
+
+  if (!this.isDeleting && this.txt === fullTxt) {
+    delta = this.period;
+    this.isDeleting = true;
+  } else if (this.isDeleting && this.txt === "") {
+    this.isDeleting = false;
+    this.loopNum++;
+    delta = 500;
+  }
+
+  setTimeout(function () {
+    that.tick();
+  }, delta);
+};
+
+var CorsairAlert = function (option, id = ".corsair-notification-area") {
+  this.show = function (msg, bg = "white", title = "") {
+    if (msg === "" || typeof msg === "undefined" || msg === null) {
+      throw '"Empty Notification"';
+    } else {
+      var alertArea = document.querySelector(id);
+      var alertBox = document.createElement("DIV");
+      var alertTitle = document.createElement("H4");
+      var alertContent = document.createElement("DIV");
+      var alertClose = document.createElement("A");
+      var alertClass = this;
+      alertContent.classList.add("content");
+      alertTitle.classList.add("title");
+      alertTitle.innerHTML = title;
+      alertContent.innerHTML = msg;
+      alertClose.classList.add("close");
+      alertClose.setAttribute("href", "#");
+      alertBox.classList.add("notification");
+      alertBox.classList.add("bg-" + bg.toLowerCase());
+      alertBox.appendChild(alertTitle);
+      alertBox.appendChild(alertContent);
+      if (
+        !option.hideCloseButton ||
+        typeof option.hideCloseButton === "undefined"
+      ) {
+        alertBox.appendChild(alertClose);
+      }
+      alertArea.appendChild(alertBox);
+      alertClose.addEventListener("click", function (event) {
+        event.preventDefault();
+        alertClass.hide(alertBox);
+      });
+      if (!option.persistent) {
+        var alertTimeout = setTimeout(function () {
+          alertClass.hide(alertBox);
+          clearTimeout(alertTimeout);
+        }, option.closeTime);
+      }
+    }
+  };
+  this.hide = function (alertBox) {
+    alertBox.classList.add("hide");
+    var disperseTimeout = setTimeout(function () {
+      // alertBox.parentNode.removeChild(alertBox);
+      alertClass.hide(alertBox);
+      clearTimeout(disperseTimeout);
+    }, 500);
+  };
+};
+
+var corsairAlert = new CorsairAlert({
+  closeTime: 5000,
+  persistent: !1,
+  hideCloseButton: !1,
+});
+
+var corsairAlertPersistent = new CorsairAlert({
+  closeTime: 5000,
+  persistent: !0,
+  hideCloseButton: !1,
+});
+
+var Notify = function (option, id = "body") {
+  this.show = function (msg, bg = "white", title = "", logo = "") {
+    if (msg === "" || typeof msg === "undefined" || msg === null) {
+      throw '"Empty Notification"';
+    } else {
+      var alertArea = document.querySelector(id);
+      var alertBox = document.createElement("DIV");
+      var alertHeader = document.createElement("DIV");
+      var alertImage = document.createElement("IMG");
+      var alertLogo = document.createElement("DIV");
+      var alertTitle = document.createElement("DIV");
+      var alertContent = document.createElement("DIV");
+      var alertDescription = document.createElement("DIV");
+      var alertClose = document.createElement("A");
+      var alertClass = this;
+      alertImage.setAttribute("src", logo);
+      alertLogo.classList.add("logo");
+      alertContent.classList.add("content");
+      alertTitle.classList.add("title");
+      alertHeader.classList.add("header");
+      alertDescription.classList.add("description");
+      alertTitle.innerHTML = title;
+      alertDescription.innerHTML = msg;
+      alertClose.classList.add("close");
+      alertClose.setAttribute("href", "#");
+      alertBox.classList.add("notify");
+      alertBox.classList.add("bg-" + bg.toLowerCase());
+      if (
+        !option.hideCloseButton ||
+        typeof option.hideCloseButton === "undefined"
+      ) {
+        alertBox.appendChild(alertClose);
+      }
+      alertContent.appendChild(alertTitle);
+      alertLogo.appendChild(alertImage);
+      alertHeader.appendChild(alertLogo);
+      alertContent.appendChild(alertDescription);
+      alertHeader.appendChild(alertContent);
+      alertBox.appendChild(alertHeader);
+
+      alertArea.appendChild(alertBox);
+      alertClose.addEventListener("click", function (event) {
+        event.preventDefault();
+        alertClass.hide(alertBox);
+      });
+      if (!option.persistent) {
+        var alertTimeout = setTimeout(function () {
+          alertClass.hide(alertBox);
+          clearTimeout(alertTimeout);
+        }, option.closeTime * 2);
+      }
+    }
+  };
+  this.hide = function (alertBox) {
+    alertBox.classList.add("hide");
+    var disperseTimeout = setTimeout(function () {
+      // alertBox.parentNode.removeChild(alertBox);
+      alertClass.hide(alertBox);
+      clearTimeout(disperseTimeout);
+    }, 500);
+  };
+};
+
+const notify = new Notify({
+  closeTime: 5000,
+  persistent: !1,
+  hideCloseButton: !1,
+});

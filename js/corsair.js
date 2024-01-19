@@ -99,7 +99,7 @@ $(document).on(
               .val()
               .replace(/[^0-9]/g, "")
           )
-      );
+      ).trigger("change");
       setTimeout(function () {
         elem.parent().siblings('input[type="tel"]').focus();
       }, 200);
@@ -1433,11 +1433,20 @@ $(function () {
       elem
         .parents(".input-addon")
         .prepend('<input type="hidden" class="input-tel-clone"/>');
-      elem
-        .parents(".input-addon")
-        .prepend(
-          '<div class="input-addon-item"><div class="select-box select-icon-left" data-placeholder="US +1" data-type="tel" data-value="" data-class="select-input tel-select-input tel phonecode numeric" data-name=""><div class="select phone-dropdown-select"><ul></ul></div></div></div>'
-        );
+      if ($(elem).hasClass('no-border')) {
+        elem
+          .parents(".input-addon")
+          .prepend(
+            '<div class="input-addon-item no-border"><div class="select-box select-icon-left" data-placeholder="US +1" data-type="tel" data-value="" data-class="select-input tel-select-input tel phonecode numeric" data-name=""><div class="select phone-dropdown-select"><ul></ul></div></div></div>'
+          );
+      } else {
+        elem
+          .parents(".input-addon")
+          .prepend(
+            '<div class="input-addon-item"><div class="select-box select-icon-left" data-placeholder="US +1" data-type="tel" data-value="" data-class="select-input tel-select-input tel phonecode numeric" data-name=""><div class="select phone-dropdown-select"><ul></ul></div></div></div>'
+          );
+      }
+      
       var addon = elem.siblings(".input-addon-item");
       var clone = parent.find(".input-tel-clone");
 
@@ -1479,11 +1488,13 @@ $(function () {
         }
 
         // clone.val(phonecode.val() + toInteger(elem.val()));
-        clone.val(
-          "+" +
-            phonecode.val().replace(/[^0-9]/g, "") +
-            toInteger(elem.val().replace(/[^0-9]/g, ""))
-        );
+        clone
+          .val(
+            "+" +
+              phonecode.val().replace(/[^0-9]/g, "") +
+              toInteger(elem.val().replace(/[^0-9]/g, ""))
+          )
+          .trigger("change");
       });
     }
   });
@@ -1572,6 +1583,7 @@ $(function () {
 $(function () {
   $('input[type="number"]').each(function () {
     $(this).addClass("input-number");
+    $(this).parents(".form-elements").addClass("input-number-wrapper");
     $(this).on("click input", function () {
       if ($(this).val() == 0) {
         $(this).val("");
@@ -1579,9 +1591,8 @@ $(function () {
     });
   });
 
-  $(
-    '<div class="input-number-mask"><div class="input-number-spinner spinner-up">+</div><div class="input-number-spinner spinner-down">-</div></div>'
-  ).insertAfter(".input-number");
+  $('<div class="input-number-mask"><div class="input-number-spinner spinner-up">+</div><div class="input-number-spinner spinner-down">-</div></div>').insertAfter(".input-number");
+  
   $(".form-elements").each(function () {
     var elem = $(this),
       input = elem.find(".input-number"),
@@ -1738,6 +1749,10 @@ $(function () {
       input.attr(i, data[i]);
     }
 
+    elem.on("click", function () {
+      $(elem).addClass("show-options");
+    })
+
     btn.on("click", function () {
       btn.toggleClass("dropdown-btn-open");
       if (btn.hasClass("dropdown-btn-open")) {
@@ -1838,80 +1853,84 @@ $(function () {
 });
 
 $(function () {
-  $('.form-elements input[type="country"], .form-elements .country-input').each(
-    function () {
-      var elem = $(this);
-      var placeholder = elem.attr("placeholder");
+  $('.form-elements input[type="country"], .form-elements .country-input').each(function () {
+    var elem = $(this);
+    var placeholder = elem.attr("placeholder");
+    var dropdown = elem.siblings(".dropdown");
+    elem.wrap("<div class='country-dropdown-wrapper'></div>");
+
+    if (elem.parents(".country-dropdown-wrapper").length) {
+      var parent = elem.parents(".country-dropdown-wrapper");
+      var countryDisplay = $('<div class="country-display hidden">' + placeholder + "</div>");
+
+      countryDisplay.addClass(elem.attr("class").replace("country-input", "").trim());
+
+      parent.append(countryDisplay);
+      parent.append('<div class="dropdown"><ul class="dropdown-menu country-dropdown"></ul></div>');
+    }
+
+    elem.on("click focus", function () {
       var dropdown = elem.siblings(".dropdown");
-      elem.wrap("<div class='country-dropdown-wrapper'></div>");
+      elem
+        // .val('')
+        .parents(".country-dropdown-wrapper")
+        .addClass("show-dropdown-menu");
+      dropdown.show();
+    });
 
-      if (elem.parents(".country-dropdown-wrapper").length) {
-        var parent = elem.parents(".country-dropdown-wrapper");
-        var countryDisplay = $(
-          '<div class="country-display hidden">' + placeholder + "</div>"
-        );
-
-        countryDisplay.addClass(
-          elem.attr("class").replace("country-input", "").trim()
-        );
-
-        parent.append(countryDisplay);
-        parent.append(
-          '<div class="dropdown"><ul class="dropdown-menu country-dropdown"></ul></div>'
-        );
-      }
-
-      elem.on("click focus", function () {
+    elem.on("keydown", function(e){
+      if (e.keyCode === 27 || e.key === 'Escape') {
         var dropdown = elem.siblings(".dropdown");
+        var dropdownMenu = dropdown.find(".country-dropdown");
+        var searchTerm = $.trim(elem.val()).toLowerCase();
+        elem
+          .parents(".country-dropdown-wrapper")
+          .removeClass("show-dropdown-menu");
+        setTimeout(function () {
+          dropdown.hide();
+        }, 200);
+        updateCountryDropdown(dropdownMenu, searchTerm);
+      }
+    });
+
+    elem.on("input blur focusout", function (e) {
+      var dropdown = elem.siblings(".dropdown");
+      var dropdownMenu = dropdown.find(".country-dropdown");
+      var searchTerm = $.trim(elem.val()).toLowerCase();
+      if (searchTerm.length === 0) {
+        elem
+          .parents(".country-dropdown-wrapper")
+          .removeClass("show-dropdown-menu");
+        setTimeout(function() {
+        dropdown.hide();
+        }, 200);
+      } else {
         elem
           .parents(".country-dropdown-wrapper")
           .addClass("show-dropdown-menu");
         dropdown.show();
-      });
-
-      elem.on("input blur focus focusout", function (e) {
-        var dropdown = elem.siblings(".dropdown");
-        var dropdownMenu = dropdown.find(".country-dropdown");
-        var searchTerm = $.trim(elem.val()).toLowerCase();
-
-        if (searchTerm.length === 0) {
-          elem
-            .parents(".country-dropdown-wrapper")
-            .removeClass("show-dropdown-menu");
-          dropdown.hide();
-        } else {
-          elem
-            .parents(".country-dropdown-wrapper")
-            .addClass("show-dropdown-menu");
-          dropdown.show();
-
-          updateCountryDropdown(dropdownMenu, searchTerm);
-        }
-      });
-    }
-  );
+        updateCountryDropdown(dropdownMenu, searchTerm);
+      }
+    });
+  });
 });
 
-$(document).on(
-  "click",
-  ".country-dropdown-wrapper .country-dropdown .option",
-  function () {
-    $(this).siblings().removeClass("selected");
-    $(this).addClass("selected");
-    var name = $(this).data("name");
-    var iso = $(this).data("iso2");
-    var parent = $(this).parents(".country-dropdown-wrapper");
-    var input = parent.find(".country-input");
-    var display = parent.find(".country-display");
-    var dropdown = parent.find(".dropdown");
-    input.val(name).trigger("change");
-    input.addClass("hidden");
-    display.removeClass("hidden").addClass("flex");
-    parent.removeClass("show-dropdown-menu");
-    dropdown.hide();
-    display.html($(this).html());
-  }
-);
+$(document).on("click", ".country-dropdown-wrapper .country-dropdown .option", function () {
+  $(this).siblings().removeClass("selected");
+  $(this).addClass("selected");
+  var name = $(this).data("name");
+  var iso = $(this).data("iso2");
+  var parent = $(this).parents(".country-dropdown-wrapper");
+  var input = parent.find(".country-input");
+  var display = parent.find(".country-display");
+  var dropdown = parent.find(".dropdown");
+  input.val(name).trigger("change");
+  input.addClass("hidden");
+  display.removeClass("hidden").addClass("flex");
+  parent.removeClass("show-dropdown-menu");
+  display.html($(this).html());
+  dropdown.hide();
+});
 
 $(document).on("click", ".country-display", function () {
   var parent = $(this).parents(".country-dropdown-wrapper");
@@ -1921,47 +1940,31 @@ $(document).on("click", ".country-display", function () {
   parent.addClass("show-dropdown-menu");
   dropdown.show();
   $(this).addClass("hidden").removeClass("flex");
-  input.val("").removeClass("hidden");
+  input.val("").removeClass("hidden").focus();
   updateCountryDropdown(dropdownMenu);
 });
 
 $(function () {
-  $('.form-elements input[type="country"], .form-elements .country-input').each(
-    function () {
-      var elem = $(this);
-      var parent = $(this).parents(".country-dropdown-wrapper");
-      var dropdown = parent.find(".dropdown-menu");
-      if (elem.length) {
-        $.post("https://api.chromesq.com/anemoi/?action=getAll").done(function (
-          res
-        ) {
-          let data = res?.result;
-          countryData = res?.result;
-          updateCountryDropdown(dropdown, "");
-          for (var i in data) {
-            if (data.hasOwnProperty(i)) {
-              var country = data[i]["name"];
-              var iso = data[i]["iso2"];
-              var flag = data[i]["flag"];
-              dropdown.append(
-                "<li role='presentation' class='option' data-name='" +
-                  country +
-                  "' data-iso2='" +
-                  iso +
-                  "'><div class='country-flag-wrapper'><img class='flag' src='" +
-                  flag +
-                  "' /></div><strong>" +
-                  country +
-                  "</strong><span class='badge'>" +
-                  iso +
-                  "</span></li>"
-              );
-            }
+  $('.form-elements input[type="country"], .form-elements .country-input').each(function () {
+    var elem = $(this);
+    var parent = $(this).parents(".country-dropdown-wrapper");
+    var dropdown = parent.find(".dropdown-menu");
+    if (elem.length) {
+      $.post("https://api.chromesq.com/anemoi/?action=getAll").done(function (res) {
+        let data = res?.result;
+        countryData = res?.result;
+        updateCountryDropdown(dropdown, "");
+        for (var i in data) {
+          if (data.hasOwnProperty(i)) {
+            var country = data[i]["name"];
+            var iso = data[i]["iso2"];
+            var flag = data[i]["flag"];
+            dropdown.append("<li role='presentation' class='option' data-name='" + country + "' data-iso2='" + iso + "'><div class='country-flag-wrapper'><img class='flag' src='" + flag + "' /></div><strong>" + country + "</strong><span class='badge'>" + iso + "</span></li>");
           }
-        });
-      }
+        }
+      });
     }
-  );
+  });
 });
 
 $(function () {

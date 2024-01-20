@@ -1857,8 +1857,12 @@ $(function () {
     var elem = $(this);
     var placeholder = elem.attr("placeholder");
     var dropdown = elem.siblings(".dropdown");
-    elem.wrap("<div class='country-dropdown-wrapper'></div>");
-
+    if (elem.hasClass("no-badge")) {
+      elem.removeClass("no-badge");
+      elem.wrap("<div class='country-dropdown-wrapper no-badge'></div>");
+    } else {
+      elem.wrap("<div class='country-dropdown-wrapper'></div>");
+    }
     if (elem.parents(".country-dropdown-wrapper").length) {
       var parent = elem.parents(".country-dropdown-wrapper");
       var countryDisplay = $('<div class="country-display hidden">' + placeholder + "</div>");

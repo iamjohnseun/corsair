@@ -71,7 +71,7 @@
 
 .form-elements .input-addon-item .phonecode {
   width: 82px !important;
-  max-width: 108px !important;
+  max-width: 115px !important;
   min-width: auto !important;
   width: fit-content !important;
   border: none !important;
@@ -107,7 +107,7 @@
 }
 
 .form-elements .input-phone-addon .phone.input-lg {
-  padding-top: 9px !important;
+  padding-top: 10px !important;
 }
 
 .form-elements .input-addon-item .form-elements,
@@ -152,6 +152,11 @@
   padding-right: 0 !important;
   border-left-style: solid !important;
   border-left-width: var(--input-border-size) !important;
+}
+
+.form-elements .input-addon-item.no-border {
+  border-left: none !important;
+  border-right: none !important;
 }
 
 .form-elements .input-addon input:last-child,
@@ -387,7 +392,7 @@
 }
 
 .form-elements .input-lg~.form-mini-placeholder {
-  top: 40%;
+  top: 50%;
 }
 
 .form-elements label+.input-lg~.form-mini-placeholder {
@@ -413,16 +418,15 @@
 .form-input:valid+.form-mini-placeholder {
   font-size: 0.6rem;
   color: #abc;
-  margin-top: -0.45rem;
-  margin-top: -0.50rem;
+  /* margin-top: -0.45rem;
+  margin-top: -0.50rem; */
 }
 
 .form-elements.active .form-mini-placeholder,
 .form-elements.focus .form-mini-placeholder {
   font-size: 0.6rem;
   color: #abc;
-  margin-top: -0.45rem;
-  margin-top: -0.50rem;
+  top: 25%;
 }
 
 .form-elements.active .form-input-placeholder,
@@ -444,6 +448,7 @@
 
 .form-elements .input-lg~.form-mini-placeholder-up {
   /* margin-top: -1rem !important; */
+  top: 40%;
 }
 
 /* .form-elements label > .input-lg~.form-mini-placeholder-up{
@@ -483,7 +488,6 @@
   font-weight: bold;
   position: absolute;
   top: .8rem;
-  top: 1rem;
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -494,6 +498,7 @@
 .form-elements .input-addon-lg .input-icon,
 .input-addon-lg .input-icon {
   top: 1.4rem;
+  top: 1.75rem;
   font-weight: bold;
   border: 0;
   background: none;
@@ -580,11 +585,18 @@ fieldset legend {
   -moz-appearance: textfield;
 }
 
+.form-elements.input-number-wrapper {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+}
+
 .form-elements .input-number-mask {
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  margin: 28px -17px 0px 0px;
+  /* position: absolute; */
+  /* right: 0px; */
+  /* top: 0px; */
+  /* margin: 28px -17px 0px 0px; */
   border: none;
 }
 
@@ -1280,6 +1292,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   text-overflow: ellipsis;
   overflow: hidden;
   cursor: pointer;
+  width: 100%;
 }
 
 .form-elements.column-reverse .country-dropdown-wrapper {
@@ -1375,6 +1388,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: var(--white-color);
   padding: 5px 10px;
   border-radius: 3px;
+}
+
+.form-elements .country-dropdown-wrapper.no-badge span {
+  display: none !important;
 }
 
 .form-elements .toggle {
@@ -1860,6 +1877,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .show-options .select.phone-dropdown-select {
   /* position: absolute; */
+}
+
+.form-elements.column-reverse .select.phone-dropdown-select {
+  position: absolute;
+  top: -155px;
 }
 
 .show-options .input-icon {

@@ -80,8 +80,12 @@ details.accordion[open]>summary~* {
 }
 
 /* END DETAILS */
+.accordion {
+  margin-bottom: 10px;
+}
 /* .accordion input[type='radio']:first-child, */
-.accordion input[type='radio']:first-of-type {
+.accordion input[type='radio']:first-of-type,
+.accordion-group input[type='radio']:first-of-type {
   display: none !important;
 }
 
@@ -148,8 +152,9 @@ details.accordion[open]>summary~* {
 }
 
 .accordion label:first-of-type .cross {
-  margin-right: 15px;
-  margin-top: 20px;
+  /* margin-right: 15px;
+  margin-top: 20px; */
+  margin: 20px;
 }
 
 .accordion label:first-of-type .cross:before,
@@ -242,6 +247,146 @@ details.accordion[open]>summary~* {
   color: var(--muted-color);
 }
 
+.accordion.accordion-card {
+  background: var(--white-color);
+}
+
+.accordion.accordion-card.disabled label:first-of-type {
+  filter: grayscale(160%);
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.accordion.accordion-card.accordion-primary label:first-of-type div:first-child {
+  color: var(--white-color);
+}
+
+.accordion.accordion-card.accordion-secondary label:first-of-type div:first-child {
+  color: var(--dark-color);
+}
+
+.accordion.accordion-card.accordion-success label:first-of-type div:first-child {
+  color: var(--white-color);
+}
+
+.accordio.accordion-card.accordion-warning label:first-of-type div:first-child {
+  color: var(--white-color);
+}
+
+.accordion.accordion-card.accordion-info label:first-of-type div:first-child {
+  color: var(--white-color);
+}
+
+.accordion.accordion-card.accordion-danger label:first-of-type div:first-child {
+  color: var(--white-color);
+}
+
+.accordion.accordion-card.accordion-error label:first-of-type div:first-child {
+  color: var(--white-color);
+}
+
+.accordion.accordion-card.accordion-dark label:first-of-type div:first-child {
+  color: var(--white-color);
+}
+
+.accordion.accordion-card.accordion-muted label:first-of-type div:first-child {
+  color: var(--dark-color);
+}
+
+.accordion.accordion-card.accordion-primary label:first-of-type .cross:before,
+.accordion.accordion-card.accordion-primary label:first-of-type .cross:after {
+  border-top: 2px solid var(--white-color);
+}
+
+.accordion.accordion-card.accordion-secondary label:first-of-type .cross:before,
+.accordion.accordion-card.accordion-secondary label:first-of-type .cross:after {
+  border-top: 2px solid var(--dark-color);
+}
+
+.accordion.accordion-card.accordion-success label:first-of-type .cross:before,
+.accordion.accordion-card.accordion-success label:first-of-type .cross:after {
+  border-top: 2px solid var(--white-color);
+}
+
+.accordion.accordion-card.accordion-warning label:first-of-type .cross:before,
+.accordion.accordion-card.accordion-warning label:first-of-type .cross:after {
+  border-top: 2px solid var(--white-color);
+}
+
+.accordion.accordion-card.accordion-info label:first-of-type .cross:before,
+.accordion.accordion-card.accordion-info label:first-of-type .cross:after {
+  border-top: 2px solid var(--white-color);
+}
+
+.accordion.accordion-card.accordion-danger label:first-of-type .cross:before,
+.accordion.accordion-card.accordion-danger label:first-of-type .cross:after {
+  border-top: 2px solid var(--white-color);
+}
+
+.accordion.accordion-card.accordion-error label:first-of-type .cross:before,
+.accordion.accordion-card.accordion-error label:first-of-type .cross:after {
+  border-top: 2px solid var(--white-color);
+}
+
+.accordion.accordion-card.accordion-dark label:first-of-type .cross:before,
+.accordion.accordion-card.accordion-dark label:first-of-type .cross:after {
+  border-top: 2px solid var(--white-color);
+}
+
+.accordion.accordion-card.accordion-muted label:first-of-type .cross:before,
+.accordion.accordion-card.accordion-muted label:first-of-type .cross:after {
+  border-top: 2px solid var(--dark-color);
+}
+
+.accordion.accordion-card.accordion-primary label:first-of-type {
+  background: var(--primary-color) !important;
+}
+
+.accordion.accordion-card.accordion-secondary label:first-of-type {
+  background: var(--secondary-color) !important;
+}
+
+.accordion.accordion-card.accordion-success label:first-of-type {
+  background: var(--success-color) !important;
+}
+
+.accordion.accordion-card.accordion-warning label:first-of-type {
+  background: var(--warning-color) !important;
+}
+
+.accordion.accordion-card.accordion-info label:first-of-type {
+  background: var(--info-color) !important;
+}
+
+.accordion.accordion-card.accordion-danger label:first-of-type {
+  background: var(--danger-color) !important;
+}
+
+.accordion.accordion-card.accordion-error label:first-of-type {
+  background: var(--error-color) !important;
+}
+
+.accordion.accordion-card.accordion-dark label:first-of-type {
+  background: var(--dark-color) !important;
+}
+
+.accordion.accordion-card.accordion-muted label:first-of-type {
+  background: var(--muted-color) !important;
+}
+
+.accordion.accordion-card:first-of-type label {
+  /* padding-top: .5rem !important; */
+}
+
+.accordion.accordion-card label:first-of-type {
+  box-shadow: 0px 1px 15px 1px rgba(230, 234, 236, 0.35);
+  border: none;
+  border-radius: var(--input-border-radius);
+  height: 55px;
+  align-items: center;
+}
+
 .cross:after {
   transform: rotate(90deg);
   margin-top: -2px;
@@ -255,11 +400,27 @@ details.accordion[open]>summary~* {
   max-height: 0;
   overflow: hidden;
   transition: max-height, .5s;
+  display: none;
+}
+
+.accordion.accordion-card .content {
+  box-shadow: 0px 1px 15px 1px rgba(230, 234, 236, 0.35);
+  border: none;
+  border-radius: 0 0 var(--input-border-radius) var(--input-border-radius);
+  margin: 0px;
+  padding: 20px 10px;
+}
+
+.accordion.accordion-card input[type='radio']:first-of-type:checked~label {
+  box-shadow: 0px 1px 15px rgba(230, 234, 236, 0.35);
+  border-bottom: 1px solid var(--secondary-color);
+  border-radius: var(--input-border-radius) var(--input-border-radius) 0 0; 
 }
 
 .accordion input[type='radio']:first-of-type:checked~.content {
   max-height: 400px;
   transition: max-height, 1s;
+  display: block;
 }
 
 .accordion input[type='radio']:first-of-type:checked~label .cross:before {

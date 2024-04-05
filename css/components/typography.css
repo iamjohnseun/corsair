@@ -471,6 +471,27 @@ details {
   color: var(--danger-color) !important;
 }
 
+.divider {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.divider:before, .divider:after{
+  content: "";
+  flex: 1 1;
+  border-bottom: 1px solid;
+  margin: auto;
+}
+
+.divider:before {
+  margin-right: 10px
+}
+
+.divider:after {
+  margin-left: 10px
+}
+
 *::selection {
   background: var(--primary-color);
   color: var(--white-color);

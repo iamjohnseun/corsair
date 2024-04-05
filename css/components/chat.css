@@ -823,12 +823,20 @@
   border-radius: 50%;
 }
 
-.chat-widget .chat-title .avatar svg {
+.chat-widget .chat-title .avatar svg,
+.chat-preview .chat-title .avatar svg {
   fill: var(--primary-color);
+  width: 100%;
 }
 
-.chat-widget .preloader .chat-title .avatar svg{
+.chat-widget .preloader .chat-title .avatar svg,
+.chat-widget .chat-title .avatar .widget-reconnecting svg,
+.chat-preview .chat-title .avatar .widget-reconnecting svg {
   animation: spin 2s linear infinite;
+}
+
+.chat-widget .chat-title .avatar .widget-reconnecting {
+  display: none;
 }
 
 .chat-preview .chat-title .avatar.online:after,
@@ -1170,10 +1178,10 @@
   fill: var(--white-color);
   width: 50%;
   height: auto;
-  position: absolute;
+  /* position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
 }
 
 .chat-widget.maximized-chat .chat__conversation-panel {
@@ -1197,6 +1205,22 @@
   flex-direction: row;
   align-items: center;
   /* height: 100%; */
+}
+
+.chat-widget .chat__conversation-panel__container .panel-item.alternative-interaction {
+  flex: 1;
+}
+
+.chat-widget .chat__conversation-panel__container .panel-item.alternative-interaction .floating-input {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  padding: 0px 5px;
+}
+
+.chat-widget .chat__conversation-panel__container .panel-item.alternative-interaction .form-elements {
+  margin: 0;
 }
 
 .chat-widget .chat__conversation-panel__container .panel-item:not(:last-child) {
@@ -1248,12 +1272,14 @@
   transition: 0.3s ease;
 }
 
-.chat-widget .chat__conversation-panel .send-message-button.active {
+.chat-widget .chat__conversation-panel .send-message-button.active,
+.chat-widget .chat__conversation-panel .send-message-button:hover {
   transform: rotate(45deg);
 }
 
-.chat-widget .chat__conversation-panel .send-message-button:hover {
-  transform: rotate(45deg);
+.chat-widget .chat__conversation-panel .send-message-button.active .close-input-icon,
+.chat-widget .chat__conversation-panel .send-message-button:hover .close-input-icon {
+  transform: rotate(135deg);
 }
 
 .chat-widget .chat__conversation-panel .send-message-button:active {

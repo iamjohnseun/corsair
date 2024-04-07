@@ -14,6 +14,7 @@ var circlePreloader =
 var players = [],
   current = 0,
   loadTime = 0;
+  
 const details = Array.from(document.querySelectorAll(".accordion"));
 details.forEach((targetDetail) => {
   targetDetail.addEventListener("click", () => {
@@ -533,6 +534,7 @@ $(function () {
   $(".accordion-group").each(function (i) {
     var elem = $(this);
     elem.attr("data-group", i);
+    elem.prepend('<input type="radio" id="accordion-default-' + i + '" name="accordion-tabs-' + i + '">');
   });
 });
 
@@ -541,22 +543,33 @@ $(function () {
     .not("details")
     .each(function (i) {
       var elem = $(this);
-      var group = elem.parents(".accordion-group").data("group");
-      elem.prepend(
-        '<input type="radio" id="tab-' + i + '" name="tabs-' + group + '">'
-      );
+      var groupIndex = elem.closest(".accordion-group").data("group");
+      elem.prepend('<input type="radio" id="accordion-tab-' + i + '" name="accordion-tabs-' + groupIndex + '">');
       var label = elem.find("label:first-of-type");
-      label.attr("for", "tab-" + i);
-      // label.contents().eq(2).wrap('<div/>');
+      // label.attr("for", "accordion-tab-" + i);
       label.wrapInner("<div></div>");
       label.append('<div class="cross"></div>');
+
+      label.click(function () {
+        if (!elem.hasClass("disabled")) {
+          var radioElem = $(this).prev("input[type='radio']");
+          if (radioElem.prop("checked")) {
+            radioElem.prop("checked", false);
+            $("#accordion-default-" + groupIndex).prop("checked", true);
+          } else {
+            radioElem.prop("checked", true);
+            $("#accordion-default-" + groupIndex).prop("checked", false);
+          }
+        }
+      });
     });
 });
+
 
 $(function () {
   $(".card.card-dropdown.dropdown-btn").each(function () {
     $(
-      '<div class="triangle"><div class="circle-button"><img class="close" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/324479/close.svg" /></div></div>'
+      '<div class="triangle"><div class="circle-button"><img class="close" src="https://cdn.chromesq.com/icons/close.svg" /></div></div>'
     ).insertAfter(".card.card-dropdown .card-top");
   });
 });
@@ -2092,8 +2105,11 @@ $(function () {
 $(function () {
   $(".modal-trigger").click(function (e) {
     var modal = $(this).data("modal");
-    $("#" + modal).toggleClass("open");
-    $("main").toggleClass("blur");
+    var $modal = $("#" + modal);
+    $modal.toggleClass("open");
+    if (!$modal.closest("main").length) {
+      $("main").toggleClass("blur");
+    }
     return false;
   });
 });
@@ -2108,9 +2124,11 @@ $(function () {
     var parent = elem.parents(".modal-wrapper");
     btn.click(() => {
       parent.toggleClass("open");
+      $("main").removeClass("blur");
     });
     close.click(() => {
       parent.toggleClass("open");
+      $("main").removeClass("blur");
     });
   });
 });

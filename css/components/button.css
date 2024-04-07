@@ -298,7 +298,7 @@
   padding: 0.80rem 0 0.80rem 0.80rem;
   /* margin: 0 0 0 1.85rem; */
   color: var(--black-color);
-  font-weight: bolder;
+  /* font-weight: bolder; */
   line-height: 1.6;
   text-align: center;
   /* text-transform: uppercase; */
@@ -509,6 +509,102 @@
 
 .btn.btn-arrow.btn-muted:hover span:not(.arrow):not(.circle) {
   color: var(--white-color) !important;
+}
+
+.btn.btn-loading {
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.33s ease-in-out;
+  padding: 20px;
+}
+
+.btn.btn-loading span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 13px;
+  color: #fff;
+  transition: inherit;
+}
+
+.btn.btn-loading:focus {
+  outline: none;
+}
+
+.btn.btn-loading.btn-loading-pending,
+.btn.btn-loading.btn-loading-success,
+.btn.btn-loading.btn-loading-error
+{
+  border-radius: 50% !important;
+  width: 40px !important;
+  pointer-events: none;
+  cursor: default;
+}
+
+.btn.btn-loading.btn-loading-pending span,
+.btn.btn-loading.btn-loading-success span,
+.btn.btn-loading.btn-loading-error span {
+  opacity: 0;
+}
+
+.btn.btn-loading.btn-loading-pending:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: inline-block;
+  height: 28px;
+  width: 28px;
+  border: 3px solid rgba(255, 255, 255, 0.33);
+  border-top-color: #fff;
+  border-radius: 50%;
+  -webkit-animation: loading-btn--fade-in 0.33s ease, loading-btn--rotation 0.66s linear 0s infinite;
+  animation: loading-btn--fade-in 0.33s ease, loading-btn--rotation 0.66s linear 0s infinite;
+}
+
+.btn.btn-loading.btn-loading-success,
+.btn.btn-loading.btn-loading-success:hover {
+  background-color: var(--success-color);
+}
+
+.btn.btn-loading.btn-loading-error,
+.btn.btn-loading.btn-loading-error:hover {
+  background-color: var(--error-color);
+}
+
+.btn.btn-loading.btn-loading-success:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: inline-block;
+  height: 25%;
+  width: 50%;
+  border: 3px solid #fff;
+  border-top-width: 0;
+  border-right-width: 0;
+  transform: translate(-50%, -75%) rotate(-45deg);
+  -webkit-animation: loading-btn--fade-in 0.6s ease;
+  animation: loading-btn--fade-in 0.6s ease;
+}
+
+.btn.btn-loading.btn-loading-error:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: inline-block;
+  height: 65%;
+  width: 65%;
+  background: linear-gradient(to bottom, transparent 44%, #fff 44%, #fff 56%, transparent 56%), linear-gradient(to right, transparent 44%, #fff 44%, #fff 56%, transparent 56%);
+  transform: translate(-50%, -50%) rotate(-45deg);
+  -webkit-animation: loading-btn--fade-in 0.6s ease;
+  animation: loading-btn--fade-in 0.6s ease;
 }
 
 .btn:focus, .btn.focus {

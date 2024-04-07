@@ -7,12 +7,14 @@
 }
 
 .modal-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  background: rgba(255, 257, 153, 0.75);
   background: rgba(0, 123, 255, 0.7);
   visibility: hidden;
   opacity: 0;
@@ -29,6 +31,7 @@
 }
 
 .modal-wrapper .modal {
+  position: relative;
   min-width: 350px;
   width: 50%;
   /* height: 400px; */
@@ -37,8 +40,7 @@
   display: block;
   margin: 50% 0 0 -300px;
   margin: 0px auto;
-  position: relative;
-  top: 50%;
+  /* top: 50%; */
   /* left: 50%; */
   background: var(--white-color);
   opacity: 0;
@@ -79,7 +81,7 @@
 }
 
 .modal-wrapper.open .modal {
-  margin-top: -200px;
+  /* margin-top: -200px; */
   opacity: 1;
 }
 
@@ -103,6 +105,8 @@
 .modal-wrapper .modal .btn-close {
   width: 32px;
   height: 32px;
+  width: 25px;
+  height: 25px;
   display: block;
   float: right;
 }
@@ -110,7 +114,8 @@
 .modal-wrapper .modal .btn-close::before,
 .modal-wrapper .modal .btn-close::after {
   content: '';
-  width: 32px;
+  /* width: 32px; */
+  width: 25px;
   height: 6px;
   display: block;
   background: #fff;
@@ -145,11 +150,12 @@
 }
 
 @media (max-width:44em) {
-  .modal-wrapper .modal {
+  /* .modal-wrapper .modal {
     top: 30%;
   }
 
   .modal-wrapper .modal.modal-lg {
     top: 15%;
-  }
+    top: 50%;
+  } */
 }

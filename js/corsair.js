@@ -66,6 +66,7 @@ $(document).on("click", function (e) {
     $(".modal").parents(".modal-wrapper").hasClass("open")
   ) {
     $(".modal").parents(".modal-wrapper.open").removeClass("open");
+    $("main").removeClass("blur");
   }
 });
 

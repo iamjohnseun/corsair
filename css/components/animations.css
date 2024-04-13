@@ -956,3 +956,10 @@
     transform: translate(-50%, -50%) rotate(360deg);
   }
 }
+
+@keyframes loading {
+  to { -webkit-transform: rotate(360deg); }
+}
+@-webkit-keyframes loading {
+  to { -webkit-transform: rotate(360deg); }
+}

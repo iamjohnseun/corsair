@@ -515,7 +515,7 @@
   border: 0;
   outline: none;
   cursor: pointer;
-  transition: all 0.33s ease-in-out;
+  /* transition: all 0.2s ease-in-out; */
   padding: 20px;
 }
 

@@ -81,10 +81,20 @@
   border-top: solid 2px var(--text-color);
 }
 
-.notify {
+.notify-wrapper {
   position: fixed;
   top: 0;
   left: 0;
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 101;
+  padding: 20px;
+}
+
+.notify {
   width: 100%;
   height: auto;
   -webkit-box-shadow: 0 0 5px black;
@@ -98,6 +108,7 @@
   -moz-transform: translateY(-5000px);
   -moz-animation: slideDown 2.5s 1.0s 1 ease forwards; */
   background-color: #bdc4ce;
+  border-radius: var(--border-radius-xl);
 }
 
 .notify .close::after,
@@ -124,14 +135,18 @@
   border-top: solid 2px var(--text-color);
 }
 
-.notify .header {
+.notify .notify-header {
   width: 100%;
   height: auto;
   background-color: inherit;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
 }
 
-.notify .header .logo {
+.notify .notify-header .notify-logo {
   position: relative;
   border-radius: 100%;
   width: 50px;
@@ -140,34 +155,64 @@
   float: left;
   display: flex;
   justify-content: center;
-  margin-right: 10px;
 }
 
-.notify .header .logo img {
+.notify .notify-header .notify-logo img,
+.notify .notify-header .notify-logo svg {
   display: block;
   margin: auto;
   user-select: none;
 }
 
-.notify .content {
-  position: relative;
-  float: left;
-  margin: 5px 0px;
-  width: calc(100% - 60px);
+.notify .notify-header .notify-logo svg {
 }
 
-.notify .content .title {
+.notify .notify-content {
+  position: relative;
+  flex: 2;
+  float: left;
+}
+
+.notify .notify-content .notify-title {
   position: relative;
   font-weight: bolder;
   font-size: 1.2em;
   font-family: 'Baufra';
 }
 
-.notify .content .description {
+.notify .notify-content .notify-description {
   position: relative;
   font-size: 1em;
   width: 100%;
   font-family: 'Asap';
+}
+
+.notify .notify-header .notify-dismiss {
+  position: relative;
+  border-radius: 100%;
+  width: 45px;
+  height: 45px;
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.notify .notify-header .notify-dismiss .notify-close {
+  padding: 20px;
+}
+
+.notify .notify-header .notify-dismiss .notify-close::after, 
+.notify .notify-header .notify-dismiss .notify-close::before {
+  width: 20px;
+  position: relative;
+  top: auto;
+  right: auto;
+}
+
+.notify .notify-header .notify-dismiss .notify-close::after {
+  margin-top: -2px;
 }
 
 @media (max-width: 767px) and (min-width: 481px) {

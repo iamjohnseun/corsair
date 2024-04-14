@@ -59,27 +59,27 @@
 }
 
 @keyframes slideDown {
-  0%, 100% {
+  0% {
     -webkit-transform: translateY(-500px);
   }
 
-  10%, 90% {
+  10%, 100% {
     -webkit-transform: translateY(0px);
   }
 }
 
 @-webkit-keyframes slideDown {
-  0%, 100% {
+  0% {
     -webkit-transform: translateY(-500px);
   }
 
-  10%, 90% {
+  10%, 100% {
     -webkit-transform: translateY(0px);
   }
 }
 
 @-moz-keyframes slideDown {
-  0%, 100% {
+  0% {
     -moz-transform: translateY(-500px);
   }
 

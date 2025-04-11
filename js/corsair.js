@@ -57,6 +57,12 @@ $(document).on("ready", function () {
       }
     }, 1200);
   });
+
+  $(".typed-text").each(function () {
+    var typer = $(this);
+    var typewriter = setupTypewriter(typer[0]);
+    typewriter.type();
+  });
 });
 
 $(document).on("click", function (e) {
@@ -211,15 +217,6 @@ $(function () {
         new TxtType(elements[i], JSON.parse(toRotate), period);
       }
     }
-  }
-});
-
-$(function () {
-  var elementList = document.querySelectorAll(".typed-text");
-  for (i = 0; i < elementList.length; i++) {
-    var typer = elementList[i];
-    typewriter = setupTypewriter(typer);
-    typewriter.type();
   }
 });
 
@@ -2755,7 +2752,16 @@ TxtType.prototype.tick = function () {
   }, delta);
 };
 
+var colorActions = [
+  "success",
+  "info",
+  "danger",
+  "warning",
+  "error",
+];
+
 var CorsairAlert = function (option, id = ".corsair-notification-area") {
+  var self = this;
   this.show = function (msg, bg = "white", title = "") {
     if (msg === "" || typeof msg === "undefined" || msg === null) {
       throw '"Empty Notification"';
@@ -2768,7 +2774,11 @@ var CorsairAlert = function (option, id = ".corsair-notification-area") {
       var alertClass = this;
       alertContent.classList.add("content");
       alertTitle.classList.add("title");
-      alertTitle.innerHTML = title;
+      if (colorActions.includes(bg)) {
+        alertTitle.innerHTML = title || sentenceCase(bg);
+      } else {
+        alertTitle.innerHTML = title || "Alert";
+      }
       alertContent.innerHTML = msg;
       alertClose.classList.add("close");
       alertClose.setAttribute("href", "#");
@@ -2783,13 +2793,18 @@ var CorsairAlert = function (option, id = ".corsair-notification-area") {
         alertBox.appendChild(alertClose);
       }
       alertArea.appendChild(alertBox);
+
       alertClose.addEventListener("click", function (event) {
         event.preventDefault();
-        alertClass.hide(alertBox);
+        var parentNotify = event.target.closest(".notification");
+        if (parentNotify) {
+          self.hide(parentNotify);
+        }
       });
+
       if (!option.persistent) {
-        var alertTimeout = setTimeout(function () {
-          alertClass.hide(alertBox);
+        var alertTimeout = setTimeout(function (event) {
+          self.hide(alertBox);
           clearTimeout(alertTimeout);
         }, option.closeTime);
       }
@@ -2799,7 +2814,7 @@ var CorsairAlert = function (option, id = ".corsair-notification-area") {
     alertBox.classList.add("hide");
     var disperseTimeout = setTimeout(function () {
       // alertBox.parentNode.removeChild(alertBox);
-      alertClass.hide(alertBox);
+      self.hide(alertBox);
       clearTimeout(disperseTimeout);
     }, 500);
   };
@@ -2818,11 +2833,13 @@ var corsairAlertPersistent = new CorsairAlert({
 });
 
 var Notify = function (option, id = "body") {
-  this.show = function (msg, bg = "white", title = "", logo = "") {
+  var self = this;
+  this.show = function (msg, bg = "primary", title = "", logo = "") {
     if (msg === "" || typeof msg === "undefined" || msg === null) {
-      throw '"Empty Notification"';
+      throw new Error('"Empty Notification"');
     } else {
       var alertArea = document.querySelector(id);
+      var alertWrapper = document.createElement("DIV");
       var alertBox = document.createElement("DIV");
       var alertHeader = document.createElement("DIV");
       var alertImage = document.createElement("IMG");
@@ -2830,41 +2847,59 @@ var Notify = function (option, id = "body") {
       var alertTitle = document.createElement("DIV");
       var alertContent = document.createElement("DIV");
       var alertDescription = document.createElement("DIV");
+      var alertDismiss = document.createElement("DIV");
       var alertClose = document.createElement("A");
       var alertClass = this;
-      alertImage.setAttribute("src", logo);
-      alertLogo.classList.add("logo");
-      alertContent.classList.add("content");
-      alertTitle.classList.add("title");
-      alertHeader.classList.add("header");
-      alertDescription.classList.add("description");
-      alertTitle.innerHTML = title;
+      
+      if (colorActions.includes(bg)) {
+        alertImage.setAttribute("src", logo || `https://cdn.chromesq.com/icons/notification/${bg}.svg`);
+        alertTitle.innerHTML = title || sentenceCase(bg);
+      } else {
+        alertImage.setAttribute("src", logo || `https://cdn.chromesq.com/icons/notification/bell.svg`);
+        alertTitle.innerHTML = title || "Alert";
+      }
+
+      alertWrapper.classList.add("notify-wrapper");
+      alertLogo.classList.add("notify-logo");
+      alertContent.classList.add("notify-content");
+      alertTitle.classList.add("notify-title");
+      alertHeader.classList.add("notify-header");
+      alertDescription.classList.add("notify-description");
+      alertDismiss.classList.add("notify-dismiss");
       alertDescription.innerHTML = msg;
       alertClose.classList.add("close");
+      alertClose.classList.add("notify-close");
       alertClose.setAttribute("href", "#");
       alertBox.classList.add("notify");
       alertBox.classList.add("bg-" + bg.toLowerCase());
-      if (
-        !option.hideCloseButton ||
-        typeof option.hideCloseButton === "undefined"
-      ) {
-        alertBox.appendChild(alertClose);
-      }
+      
       alertContent.appendChild(alertTitle);
       alertLogo.appendChild(alertImage);
       alertHeader.appendChild(alertLogo);
       alertContent.appendChild(alertDescription);
       alertHeader.appendChild(alertContent);
+      if (
+        !option.hideCloseButton ||
+        typeof option.hideCloseButton === "undefined"
+      ) {
+        alertDismiss.appendChild(alertClose);
+        alertHeader.appendChild(alertDismiss);
+      }
       alertBox.appendChild(alertHeader);
-
-      alertArea.appendChild(alertBox);
+      alertWrapper.appendChild(alertBox);
+      alertArea.appendChild(alertWrapper);
+      
       alertClose.addEventListener("click", function (event) {
         event.preventDefault();
-        alertClass.hide(alertBox);
+        var parentNotify = event.target.closest(".notify");
+        if (parentNotify) {
+          self.hide(parentNotify);
+        }
       });
+
       if (!option.persistent) {
         var alertTimeout = setTimeout(function () {
-          alertClass.hide(alertBox);
+          self.hide(alertBox);
           clearTimeout(alertTimeout);
         }, option.closeTime * 2);
       }
@@ -2873,15 +2908,21 @@ var Notify = function (option, id = "body") {
   this.hide = function (alertBox) {
     alertBox.classList.add("hide");
     var disperseTimeout = setTimeout(function () {
-      // alertBox.parentNode.removeChild(alertBox);
-      alertClass.hide(alertBox);
+      alertBox.parentNode.removeChild(alertBox);
       clearTimeout(disperseTimeout);
     }, 500);
   };
 };
 
+
 const notify = new Notify({
   closeTime: 5000,
   persistent: !1,
+  hideCloseButton: !1,
+});
+
+var notifyPersistent = new Notify({
+  closeTime: 5000,
+  persistent: !0,
   hideCloseButton: !1,
 });

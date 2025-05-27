@@ -1,0 +1,681 @@
+.form-elements nav.rating {
+  background-color: initial;
+  border-bottom: initial;
+  min-width: inherit;
+  z-index: inherit;
+}
+
+.form-elements .rating {
+  --active: #EEC900;
+  --active-pale: rgba(238, 201, 0, .80);
+  --inactive: #121621;
+  --face-active: #121621;
+  --face-inactive: rgba(238, 201, 0, .70);;
+
+  --star-width: 36px;
+  --star-height: 34px;
+  --face-scale: 1;
+  --margin-right: 16px;
+
+  display: flex;
+  position: relative;
+  width: 100%;
+}
+
+.form-elements .rating.rating-xs {
+  --star-width: 18px;
+  --star-height: 17px;
+  --face-scale: 0.5;
+  --margin-right: 8px;
+}
+
+.form-elements .rating.rating-xl {
+  --star-width: 60px;
+  --star-height: 57px;
+  --face-scale: 1.67;
+  --margin-right: 24px;
+}
+
+.form-elements .rating.rating-sm {
+  --star-width: 24px;
+  --star-height: 22px;
+  --face-scale: 0.67;
+  --margin-right: 12px;
+}
+
+.form-elements .rating.rating-lg {
+  --star-width: 48px;
+  --star-height: 46px;
+  --face-scale: 1.33;
+  --margin-right: 20px;
+}
+
+.form-elements .rating ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  color: var(--inactive);
+}
+
+.form-elements .rating ul li {
+  --face: var(--face-inactive);
+  cursor: pointer;
+  position: relative;
+}
+
+.form-elements .rating ul li:before,
+.form-elements .rating ul li:after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  transition: all 0.2s ease;
+}
+
+.form-elements .rating ul li:before {
+  --r: 0deg;
+  width: calc(2px * var(--face-scale));
+  height: calc(2px * var(--face-scale));
+  border-radius: calc(1px * var(--face-scale));
+  top: calc(15px * var(--face-scale));
+  left: calc(13px * var(--face-scale));
+  transform: rotate(var(--r));
+  filter: drop-shadow(calc(8px * var(--face-scale)) 0 0 var(--face));
+}
+
+.form-elements .rating ul li span {
+  width: calc(2px * var(--face-scale));
+  height: calc(2px * var(--face-scale));
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  margin: calc(-1px * var(--face-scale)) 0 0 calc(-1px * var(--face-scale));
+  transform: scale(0.6);
+  opacity: 0;
+  box-shadow:
+    calc(16px * var(--face-scale)) calc(-16px * var(--face-scale)) 0 var(--active-pale),
+    calc(-16px * var(--face-scale)) calc(-16px * var(--face-scale)) 0 var(--active-pale),
+    calc(-21px * var(--face-scale)) calc(8px * var(--face-scale)) 0 var(--active-pale),
+    calc(21px * var(--face-scale)) calc(8px * var(--face-scale)) 0 var(--active-pale),
+    0 calc(22px * var(--face-scale)) 0 var(--active-pale);
+}
+
+.form-elements .rating ul li:nth-child(1):after {
+  width: calc(10px * var(--face-scale));
+  height: calc(10px * var(--face-scale));
+  top: calc(20px * var(--face-scale));
+  left: calc(13px * var(--face-scale));
+  border-radius: 50%;
+  border: calc(1px * var(--face-scale)) solid transparent;
+  border-top-color: var(--face);
+}
+
+.form-elements .rating ul li:nth-child(3):after {
+  width: calc(6px * var(--face-scale));
+  left: calc(15px * var(--face-scale));
+  top: calc(20px * var(--face-scale));
+  height: calc(1px * var(--face-scale));
+  background: var(--face);
+}
+
+.form-elements .rating ul li:nth-child(4):after {
+  width: calc(10px * var(--face-scale));
+  height: calc(10px * var(--face-scale));
+  top: calc(12px * var(--face-scale));
+  left: calc(13px * var(--face-scale));
+  border-radius: 50%;
+  border: calc(1px * var(--face-scale)) solid transparent;
+  border-bottom-color: var(--face);
+}
+.form-elements .rating ul li:nth-child(4).current {
+  animation: active-4 0.4s ease;
+}
+
+.form-elements .rating ul li:nth-child(4).current span {
+  animation: active-span 0.32s ease;
+}
+
+.form-elements .rating ul li:nth-child(5):after {
+  width: calc(6px * var(--face-scale));
+  height: calc(3px * var(--face-scale));
+  left: calc(15px * var(--face-scale));
+  top: calc(20px * var(--face-scale));
+  border-radius: 0 0 calc(3px * var(--face-scale)) calc(3px * var(--face-scale));
+  background: var(--face);
+}
+
+.form-elements .rating ul li:nth-child(5).current {
+  animation: active-5 0.72s ease;
+}
+
+.form-elements .rating ul li:nth-child(5).current span {
+  animation: active-span 0.32s ease;
+}
+
+.form-elements .rating ul li.current {
+  --face: var(--face-active);
+}
+
+.form-elements .rating ul li.current svg {
+  color: var(--active);
+  fill: rgba(0, 0, 0, 0.2);
+}
+
+.form-elements .rating ul li:not(.current) svg {
+  transition: transform 0.2s ease;
+}
+
+.form-elements .rating ul li:not(.current):active svg {
+  transform: scale(0.9);
+}
+
+.form-elements .rating ul li:not(:last-child) {
+  margin: 0 16px 0 0;
+}
+
+.form-elements .rating ul li:not(:last-child):before {
+  background: var(--face);
+}
+
+.form-elements .rating ul li:not(:last-child).current:before {
+  animation: blink 3s linear infinite;
+}
+
+.form-elements .rating ul li:last-child:before {
+  --r: -45deg;
+  width: calc(3px * var(--face-scale));
+  height: calc(3px * var(--face-scale));
+  border-top: calc(1px * var(--face-scale)) solid var(--face);
+  border-right: calc(1px * var(--face-scale)) solid var(--face);
+  border-radius: 0 calc(1px * var(--face-scale)) 0 0;
+  left: calc(12px * var(--face-scale));
+  filter: drop-shadow(calc(6px * var(--face-scale)) calc(6px * var(--face-scale)) 0 var(--face));
+}
+
+.form-elements .rating svg {
+  width: 36px;
+  height: 34px;
+  display: block;
+  fill: rgba(0, 0, 0, 0.04);
+}
+
+.form-elements .rating>div {
+  left: 0;
+  top: 0;
+  position: absolute;
+  display: none;
+  transform: translateX(var(--x));
+  transition: transform 0.3s cubic-bezier(0, 0, 0.265, 1.1) 0.24s;
+}
+
+.form-elements .rating>div span {
+  display: block;
+}
+
+.form-elements .rating>div span svg {
+  color: var(--active);
+  fill: rgba(0, 0, 0, 0.2);
+}
+
+.form-elements .rating.animate-left>div,
+.form-elements .rating.animate-right>div {
+  display: block;
+}
+
+.form-elements .rating.animate-left>div span,
+.form-elements .rating.animate-right>div span {
+  animation: scale 0.28s linear 0.24s;
+}
+
+.form-elements .rating.animate-left li.move-to:before {
+  animation: move-to-left 0.31s ease 0.36s;
+}
+
+.form-elements .rating.animate-left li.move-from:before {
+  animation: move-to-right 0.28s ease;
+}
+
+.form-elements .rating.animate-left>div {
+  animation: double-left 0.32s linear 0.24s;
+}
+
+.form-elements .rating.animate-left>div span svg {
+  animation: left 0.3s ease, right-end 0.4s ease 0.4s;
+}
+
+.form-elements .rating.animate-right li.move-to:before {
+  animation: move-to-right 0.31s ease 0.36s;
+}
+
+.form-elements .rating.animate-right li.move-from:before {
+  animation: move-to-left 0.28s ease;
+}
+
+.form-elements .rating.animate-right>div {
+  animation: double-right 0.32s linear 0.24s;
+}
+
+.form-elements .rating.animate-right>div span svg {
+  animation: right 0.3s ease, left-end 0.4s ease 0.4s;
+}
+
+.form-elements .rating ul li.hover svg {
+  color: var(--active);
+  opacity: 0.7;
+  transform: scale(1.1);
+}
+
+.form-elements .rating ul li.hover {
+  --face: var(--face-active);
+}
+
+@keyframes active-4 {
+  40% {
+    transform: scale(1.25);
+  }
+}
+
+@keyframes active-span {
+  60% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.16);
+    opacity: 0;
+  }
+}
+
+@keyframes active-5 {
+  15% {
+    transform: rotate(180deg) scale(1.1);
+  }
+
+  30% {
+    transform: rotate(360deg) scale(1.2);
+  }
+
+  70% {
+    transform: rotate(360deg) translateY(14%) scaleY(0.72);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes double-right {
+  60% {
+    filter: drop-shadow(-5px 0 1px var(--active-pale)) drop-shadow(4px 0 1px var(--active-pale));
+  }
+}
+
+@keyframes scale {
+  60% {
+    transform: scaleX(1.32);
+    filter: blur(0.5px);
+  }
+}
+
+@keyframes blink {
+
+  0%,
+  5%,
+  15%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  10% {
+    transform: scaleY(0.4);
+  }
+}
+
+@keyframes double-left {
+  60% {
+    filter: drop-shadow(5px 0 1px var(--active-pale)) drop-shadow(-4px 0 1px var(--active-pale));
+  }
+}
+
+@keyframes right {
+
+  0%,
+  100% {
+    transform-origin: 17% 100%;
+  }
+
+  50% {
+    transform: rotate(-12deg) skewX(12deg);
+  }
+}
+
+@keyframes left {
+
+  0%,
+  100% {
+    transform-origin: 83% 100%;
+  }
+
+  50% {
+    transform: rotate(12deg) skewX(-12deg);
+  }
+}
+
+@keyframes right-end {
+
+  0%,
+  100% {
+    transform-origin: 17% 100%;
+  }
+
+  40% {
+    transform: rotate(-6deg) skewX(4deg) scaleX(0.92);
+  }
+
+  70% {
+    transform: rotate(1deg) skewX(-8deg) scaleX(1.04);
+  }
+}
+
+@keyframes left-end {
+
+  0%,
+  100% {
+    transform-origin: 83% 100%;
+  }
+
+  40% {
+    transform: rotate(6deg) skewX(-4deg) scaleX(0.92);
+  }
+
+  70% {
+    transform: rotate(-1deg) skewX(8deg) scaleX(1.04);
+  }
+}
+
+@keyframes move-to-right {
+  40% {
+    transform: translateX(3px) rotate(var(--r));
+  }
+}
+
+@keyframes move-to-left {
+  40% {
+    transform: translateX(-3px) rotate(var(--r));
+  }
+}
+
+.form-elements .rating.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.form-elements .rating.disabled ul li {
+  cursor: not-allowed;
+}
+
+
+.form-elements .rating.rating-sm svg {
+  width: 24px;
+  height: 22px;
+}
+
+.form-elements .rating.rating-lg svg {
+  width: 48px;
+  height: 46px;
+}
+
+.form-elements .rating.rating-primary {
+  --active: var(--primary-color);
+  --active-pale: rgba(0, 123, 255, 0.36);
+}
+
+.form-elements .rating.rating-success {
+  --active: var(--success-color);
+  --active-pale: rgba(78, 241, 143, 0.36);
+}
+
+.form-elements .rating.rating-warning {
+  --active: var(--warning-color);
+  --active-pale: rgba(241, 187, 78, 0.36);
+}
+
+.form-elements .rating.rating-danger {
+  --active: var(--danger-color);
+  --active-pale: rgba(255, 64, 644, 0.36);
+}
+
+.form-elements .rating.rating-error {
+  --active: var(--error-color);
+  --active-pale: rgba(241, 78, 78, 0.36);
+}
+
+.form-elements .rating.rating-disabled {
+  --active: var(--muted-color);
+  --active-pale: rgba(99, 108, 114, 0.36);
+}
+
+.form-elements .rating.rating-dark,
+.form-elements .rating.rating-black {
+  --active: var(--black-color);
+  --active-pale: rgba(51, 51, 51, 0.36);
+}
+
+.form-elements .rating.rating-light,
+.form-elements .rating.rating-white {
+  --active: var(--white-color);
+  --active-pale: rgba(225, 225, 225, 0.36);
+}
+
+.form-elements .rating-tooltip {
+  position: absolute;
+  top: calc(-40px * var(--face-scale));
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: calc(6px * var(--face-scale)) calc(12px * var(--face-scale));
+  border-radius: calc(4px * var(--face-scale));
+  font-size: calc(12px * var(--face-scale));
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.form-elements .rating-tooltip:before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: calc(5px * var(--face-scale)) solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.8);
+}
+
+.form-elements .rating-tooltip.show {
+  top: calc(-100% - 5px);
+  opacity: 1;
+  visibility: visible;
+}
+
+.form-elements .rating-focused {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.form-elements .rating ul li:focus {
+  outline: none;
+}
+
+.form-elements .rating ul li:focus svg {
+  filter: drop-shadow(0 0 calc(3px * var(--face-scale)) rgba(0, 123, 255, 0.5));
+}
+
+.form-elements .rating.rating-error ul li svg {
+  color: var(--error-color);
+}
+
+.form-elements .rating.rating-loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.form-elements .rating.rating-loading ul li svg {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 768px) {
+  .form-elements .rating:not(.rating-xs):not(.rating-sm):not(.rating-lg):not(.rating-xl) {
+    --star-width: 32px;
+    --star-height: 30px;
+    --face-scale: 0.89;
+    --margin-right: 12px;
+  }
+
+  .form-elements .rating svg {
+    width: 32px;
+    height: 30px;
+  }
+
+  .form-elements .rating ul li:not(:last-child) {
+    margin: 0 12px 0 0;
+  }
+
+  .form-elements .rating-tooltip {
+    font-size: calc(11px * var(--face-scale));
+    padding: calc(4px * var(--face-scale)) calc(8px * var(--face-scale));
+  }
+}
+
+@media (max-width: 480px) {
+  .form-elements .rating:not(.rating-xs):not(.rating-sm):not(.rating-lg):not(.rating-xl) {
+    --star-width: 28px;
+    --star-height: 26px;
+    --face-scale: 0.78;
+    --margin-right: 8px;
+  }
+
+
+  .form-elements .rating svg {
+    width: 28px;
+    height: 26px;
+  }
+
+  .form-elements .rating ul li:not(:last-child) {
+    margin: 0 8px 0 0;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .form-elements .rating {
+    --active: #000;
+    --inactive: #666;
+    --face-active: #000;
+    --face-inactive: #666;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .form-elements .rating ul li svg,
+  .form-elements .rating>div,
+  .form-elements .rating-tooltip {
+    transition: none;
+    animation: none;
+  }
+
+  .form-elements .rating.animate-left,
+  .form-elements .rating.animate-right {
+    animation: none;
+  }
+}
+
+[dir="rtl"] .form-elements .rating ul {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .form-elements .rating ul li:not(:last-child) {
+  margin: 0 0 0 var(--margin-right);
+}
+
+[dir="rtl"] .form-elements .rating ul li:last-child:before {
+  --r: 45deg;
+  left: calc(21px * var(--face-scale));
+  filter: drop-shadow(calc(-6px * var(--face-scale)) calc(6px * var(--face-scale)) 0 var(--face));
+}
+
+.form-elements .rating.rating-heart {
+  --star-width: calc(32px * var(--face-scale));
+  --star-height: calc(29px * var(--face-scale));
+}
+
+.form-elements .rating.rating-thumbs {
+  --star-width: calc(28px * var(--face-scale));
+  --star-height: calc(32px * var(--face-scale));
+}
+
+.form-elements .rating ul li svg,
+.form-elements .rating>div span svg {
+  will-change: transform, color;
+}
+
+.form-elements .rating.animate-left>div,
+.form-elements .rating.animate-right>div {
+  /* will-change: transform; */
+  display: none !important;
+}
+
+.form-elements .rating {
+  z-index: 1;
+}
+
+.form-elements .rating>div {
+  display: none;
+  /* z-index: 2; */
+}
+
+.form-elements .rating-tooltip {
+  z-index: 1000;
+}
+
+.form-elements .rating ul li {
+  transition: transform 0.1s ease;
+}
+
+.form-elements .rating ul li:hover {
+  transform: scale(1.05);
+}
+
+.form-elements .rating ul li:active {
+  transform: scale(0.95);
+}
+
+
+@media (hover: none) and (pointer: coarse) {
+  .form-elements .rating ul li:hover {
+    transform: none;
+  }
+
+  .form-elements .rating ul li:active {
+    transform: scale(0.9);
+    transition: transform 0.1s ease;
+  }
+}

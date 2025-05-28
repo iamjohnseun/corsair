@@ -117,6 +117,21 @@ $(document).on(
   }
 );
 
+var resizeTimeout;
+$(window).on("resize", function () {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(function () {
+    $(".form-elements .rating").each(function () {
+      var rating = $(this);
+      var tooltip = rating.find(".rating-tooltip");
+
+      if (tooltip.length && tooltip.hasClass("show")) {
+        tooltip.removeClass("show");
+      }
+    });
+  }, 250);
+});
+
 $(window).resize(function () {
   windowWidth = $(window).width();
   if (windowWidth > 900) {
@@ -2163,6 +2178,647 @@ $(function () {
   });
 });
 
+$(function () {
+  $('.form-elements input[type="rating"]').each(function () {
+    var input = $(this);
+    var maxRating = parseInt(input.attr("max")) || 5;
+    var currentRating = parseInt(input.val()) || 0;
+    var name = input.attr("name") || "";
+    var id = input.attr("id") || "";
+    var classes = input.attr("class") || "";
+    var disabled = input.prop("disabled");
+    var readonly = input.prop("readonly");
+    var size = input.data("size") || "";
+    var theme = input.data("theme") || "";
+    var showTooltip = input.data("tooltip") || false;
+    var shape = input.data("shape") || "";
+    var ratingClasses = ["rating"];
+    if (size) ratingClasses.push("rating-" + size);
+    if (theme) ratingClasses.push("rating-" + theme);
+    if (shape) ratingClasses.push("rating-" + shape);
+    if (disabled || readonly) ratingClasses.push("disabled");
+
+    var ratingHTML = `
+      <nav class="${ratingClasses.join(
+        " "
+      )}" data-rating="${currentRating}" data-max="${maxRating}" ${
+      showTooltip ? 'data-tooltip="true"' : ""
+    }>
+        <ul>
+          ${generateStars(maxRating, currentRating)}
+        </ul>
+        <div>
+          <span>
+            <svg>
+              <use xlink:href="#star"></use>
+            </svg>
+          </span>
+        </div>
+        ${showTooltip ? '<div class="rating-tooltip"></div>' : ""}
+      </nav>
+      <input type="hidden" name="${name}" id="${id}" value="${currentRating}" class="${classes}" ${
+      disabled ? "disabled" : ""
+    }>
+    `;
+
+    input.replaceWith(ratingHTML);
+
+    if (!$("#star-symbol").length) {
+      $("body").append(`
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none" id="star-symbol">
+          <symbol id="star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 34">
+            <path fill="currentColor" d="M19.6859343,0.861782958 L24.8136328,8.05088572 C25.0669318,8.40601432 25.4299179,8.6717536 25.8489524,8.80883508 L34.592052,11.6690221 C35.6704701,12.021812 36.2532905,13.1657829 35.8938178,14.2241526 C35.8056709,14.4836775 35.6647294,14.7229267 35.4795411,14.9273903 L29.901129,21.0864353 C29.5299163,21.4962859 29.3444371,22.0366367 29.3872912,22.5833831 L30.1116131,31.8245163 C30.1987981,32.9368499 29.3506698,33.9079379 28.2172657,33.993502 C27.9437428,34.0141511 27.6687736,33.9809301 27.4085205,33.8957918 L18.6506147,31.0307612 C18.2281197,30.8925477 17.7713439,30.8925477 17.3488489,31.0307612 L8.59094317,33.8957918 C7.51252508,34.2485817 6.34688429,33.6765963 5.98741159,32.6182265 C5.90066055,32.3628116 5.86681029,32.0929542 5.88785051,31.8245163 L6.61217242,22.5833831 C6.65502653,22.0366367 6.46954737,21.4962859 6.09833466,21.0864353 L0.519922484,14.9273903 C-0.235294755,14.0935658 -0.158766688,12.8167745 0.690852706,12.0755971 C0.899189467,11.8938516 1.14297067,11.7555303 1.40741159,11.6690221 L10.1505113,8.80883508 C10.5695458,8.6717536 10.9325319,8.40601432 11.1858308,8.05088572 L16.3135293,0.861782958 C16.9654141,-0.0521682813 18.2488096,-0.274439442 19.1800736,0.365326425 C19.3769294,0.500563797 19.5481352,0.668586713 19.6859343,0.861782958 Z"></path>
+          </symbol>
+          <symbol id="heart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 29">
+            <path fill="currentColor" d="M16,28.261c0,0-14-7.926-14-17.046c0-9.356,13.159-10.399,14-0.454c0.841-9.944,14-8.902,14,0.454C30,20.335,16,28.261,16,28.261z"/>
+          </symbol>
+          <symbol id="thumbs" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 32">
+            <path fill="currentColor" d="M14,0c1.105,0,2,0.895,2,2v8c0,1.105-0.895,2-2,2s-2-0.895-2-2V2C12,0.895,12.895,0,14,0z M8,12c1.105,0,2,0.895,2,2v16c0,1.105-0.895,2-2,2s-2-0.895-2-2V14C6,12.895,6.895,12,8,12z M20,12c1.105,0,2,0.895,2,2v16c0,1.105-0.895,2-2,2s-2-0.895-2-2V14C18,12.895,18.895,12,20,12z"/>
+          </symbol>
+        </svg>
+      `);
+    }
+  });
+});
+
+$(function () {
+  $(".form-elements .rating").each(function () {
+    var rating = $(this);
+    var hiddenInput = rating.siblings('input[type="hidden"]');
+    var formElements = rating.closest(".form-elements");
+
+    hiddenInput.on("change", function () {
+      var value = parseInt($(this).val()) || 0;
+      var required = $(this).prop("required") || $(this).hasClass("required");
+      var min = parseInt($(this).attr("min")) || 0;
+      var max =
+        parseInt($(this).attr("max")) || parseInt(rating.attr("data-max")) || 5;
+
+      var isValid = true;
+      var errorMessage = "";
+
+      if (required && value === 0) {
+        isValid = false;
+        errorMessage = "Please provide a rating";
+      } else if (value < min) {
+        isValid = false;
+        errorMessage = `Rating must be at least ${min}`;
+      } else if (value > max) {
+        isValid = false;
+        errorMessage = `Rating cannot exceed ${max}`;
+      }
+
+      if (!isValid) {
+        formElements.addClass("has-error");
+        rating.addClass("rating-error");
+
+        var errorElement = formElements.find(".error-message");
+        if (errorElement.length) {
+          errorElement.text(errorMessage);
+        } else {
+          formElements.append(
+            `<div class="error-message text-danger">${errorMessage}</div>`
+          );
+        }
+      } else {
+        formElements.removeClass("has-error");
+        rating.removeClass("rating-error");
+        formElements.find(".error-message").remove();
+      }
+
+      if (typeof validate === "function") {
+        validate($(this));
+      }
+    });
+    hiddenInput.trigger("change");
+
+    if (parseInt(hiddenInput.val()) > 0) {
+      formElements.addClass("active");
+    }
+
+    rating.on("rating:change", function (e, value) {
+      if (value > 0) {
+        formElements.addClass("active");
+      } else {
+        formElements.removeClass("active");
+      }
+    });
+  });
+});
+
+$(function () {
+  $(".form-elements .rating[data-autosave]").each(function () {
+    var rating = $(this);
+    var hiddenInput = rating.siblings('input[type="hidden"]');
+    var autosaveKey = rating.data("autosave");
+
+    if (!autosaveKey || !window.localStorage) {
+      return;
+    }
+
+    try {
+      var savedValue = localStorage.getItem("corsair_rating_" + autosaveKey);
+      if (savedValue !== null && !isNaN(savedValue)) {
+        var value = parseInt(savedValue);
+        var maxRating = parseInt(rating.attr("data-max")) || 5;
+
+        if (value >= 0 && value <= maxRating) {
+          setRating(rating, value);
+        }
+      }
+    } catch (e) {
+      console.warn("Failed to load saved rating:", e);
+    }
+
+    hiddenInput.on("change", function () {
+      try {
+        localStorage.setItem("corsair_rating_" + autosaveKey, $(this).val());
+      } catch (e) {
+        console.warn("Failed to save rating:", e);
+      }
+    });
+  });
+});
+
+$(document).on(
+  "click",
+  ".form-elements .rating:not(.disabled) ul li",
+  function () {
+    var li = $(this);
+    var ul = li.parent();
+    var rating = ul.parent();
+    var last = ul.find(".current");
+    var hiddenInput = rating.siblings('input[type="hidden"]');
+    var newRating = li.data("rating");
+    var tooltip = rating.find(".rating-tooltip");
+    var maxRating = parseInt(rating.attr("data-max")) || 5;
+
+    if (rating.hasClass("animate-left") || rating.hasClass("animate-right")) {
+      return;
+    }
+
+    hiddenInput.val(newRating).trigger("change");
+    rating.attr("data-rating", newRating);
+
+    ul.find("li").each(function (index) {
+      var isPressed = index + 1 <= newRating;
+      $(this).attr("aria-pressed", isPressed);
+    });
+
+    if (tooltip.length) {
+      updateRatingTooltip(tooltip, newRating, maxRating);
+    }
+
+    var lastRating = last.length ? last.last().data("rating") || 0 : 0;
+    var isMovingRight = newRating > lastRating;
+
+    if (Math.abs(newRating - lastRating) > 0) {
+      rating.addClass(isMovingRight ? "animate-right" : "animate-left");
+
+      var starWidth = li.outerWidth();
+      var starMargin = parseInt(rating.css("--margin-right")) || 16;
+      var position = (newRating - 1) * (starWidth + starMargin);
+
+      rating.css({
+        "--x": position + "px",
+      });
+
+      li.addClass("move-to");
+      if (last.length) {
+        last.addClass("move-from");
+      }
+
+      setTimeout(function () {
+        last.removeClass("current");
+
+        // Updated section to add previous class distinction
+        ul.children("li").each(function (index) {
+          var $item = $(this);
+          var itemRating = index + 1;
+
+          // Remove all state classes first
+          $item.removeClass("current previous");
+
+          if (itemRating === newRating) {
+            // This is the selected rating
+            $item.addClass("current");
+          } else if (itemRating < newRating) {
+            // This is a previous (lower) rating
+            $item.addClass("previous");
+          }
+          // Items with itemRating > newRating remain inactive (no class)
+        });
+
+        li.removeClass("move-to");
+        if (last.length) {
+          last.removeClass("move-from");
+        }
+        rating.removeClass("animate-left animate-right");
+      }, 800);
+    } else {
+      last.removeClass("current");
+
+      // Updated section to add previous class distinction (no animation case)
+      ul.children("li").each(function (index) {
+        var $item = $(this);
+        var itemRating = index + 1;
+
+        // Remove all state classes first
+        $item.removeClass("current previous");
+
+        if (itemRating === newRating) {
+          // This is the selected rating
+          $item.addClass("current");
+        } else if (itemRating < newRating) {
+          // This is a previous (lower) rating
+          $item.addClass("previous");
+        }
+        // Items with itemRating > newRating remain inactive (no class)
+      });
+    }
+
+    rating.trigger("rating:change", [newRating, maxRating]);
+    rating.removeClass("rating-error");
+    rating.closest(".form-elements").removeClass("has-error");
+  }
+);
+
+$(document).on(
+  "mouseenter",
+  ".form-elements .rating:not(.disabled) ul li",
+  function () {
+    var li = $(this);
+    var ul = li.parent();
+    var rating = ul.parent();
+    var tooltip = rating.find(".rating-tooltip");
+    var hoverRating = li.data("rating");
+    var maxRating = parseInt(rating.attr("data-max")) || 5;
+
+    if (rating.hasClass("animate-left") || rating.hasClass("animate-right")) {
+      return;
+    }
+
+    ul.children("li").each(function (index) {
+      $(this).toggleClass("hover", index <= li.index());
+    });
+
+    if (tooltip.length) {
+      updateRatingTooltip(tooltip, hoverRating, maxRating);
+
+      var liPosition = li.position();
+      var liWidth = li.outerWidth();
+      var ratingWidth = rating.outerWidth();
+      var tooltipWidth = tooltip.outerWidth();
+
+      var idealLeft = liPosition.left + liWidth / 2;
+      var tooltipHalfWidth = tooltipWidth / 2;
+
+      var leftPosition;
+      if (idealLeft - tooltipHalfWidth < 0) {
+        leftPosition = Math.max(5, idealLeft - tooltipWidth * 0.2);
+      } else if (idealLeft + tooltipHalfWidth > ratingWidth) {
+        leftPosition = Math.min(
+          ratingWidth - tooltipWidth - 5,
+          idealLeft - tooltipWidth * 0.8
+        );
+      } else {
+        leftPosition = idealLeft - tooltipHalfWidth;
+      }
+
+      tooltip.css("left", leftPosition + "px");
+      tooltip.addClass("show");
+    }
+
+    rating.trigger("rating:hover", [hoverRating, maxRating]);
+  }
+);
+
+$(document).on("mouseleave", ".form-elements .rating ul", function () {
+  var ul = $(this);
+  var rating = ul.parent();
+  var tooltip = rating.find(".rating-tooltip");
+
+  ul.children("li").removeClass("hover");
+
+  if (tooltip.length) {
+    tooltip.removeClass("show");
+  }
+
+  rating.trigger("rating:hover:leave");
+});
+
+$(document).on("focus", ".form-elements .rating ul li", function () {
+  var li = $(this);
+  var ul = li.parent();
+  var rating = ul.parent();
+
+  rating.addClass("rating-focused");
+
+  ul.children("li").each(function (index) {
+    $(this).toggleClass("hover", index <= li.index());
+  });
+});
+
+$(document).on("blur", ".form-elements .rating ul li", function () {
+  var li = $(this);
+  var ul = li.parent();
+  var rating = ul.parent();
+
+  rating.removeClass("rating-focused");
+
+  ul.children("li").removeClass("hover");
+});
+
+$(document).on("keydown", ".form-elements .rating ul li", function (e) {
+  var li = $(this);
+  var ul = li.parent();
+  var rating = ul.parent();
+
+  if (rating.hasClass("disabled")) {
+    return;
+  }
+
+  switch (e.which) {
+    case 13:
+    case 32:
+      e.preventDefault();
+      li.click();
+      var newRating = li.data("rating");
+      var maxRating = parseInt(rating.attr("data-max")) || 5;
+      announceToScreenReader(
+        `Rating set to ${newRating} out of ${maxRating} stars`
+      );
+      break;
+
+    case 37:
+      e.preventDefault();
+      var prev = li.prev();
+      if (prev.length) {
+        prev.focus();
+      } else {
+        ul.find("li:last").focus();
+      }
+      break;
+
+    case 39:
+      e.preventDefault();
+      var next = li.next();
+      if (next.length) {
+        next.focus();
+      } else {
+        ul.find("li:first").focus();
+      }
+      break;
+
+    case 36:
+      e.preventDefault();
+      ul.find("li:first").focus();
+      break;
+
+    case 35:
+      e.preventDefault();
+      ul.find("li:last").focus();
+      break;
+
+    case 27:
+      e.preventDefault();
+      li.blur();
+      break;
+  }
+});
+
+var touchStartX = 0;
+var touchStartY = 0;
+var touchStartTime = 0;
+var isDragging = false;
+
+$(document).on("touchstart", ".form-elements .rating:not(.disabled) ul", function(e) {
+  var touch = e.originalEvent.touches[0];
+  touchStartX = touch.clientX;
+  touchStartY = touch.clientY;
+  touchStartTime = Date.now();
+  isDragging = false;
+});
+
+$(document).on(
+  "touchmove",
+  ".form-elements .rating:not(.disabled) ul",
+  function (e) {
+    e.preventDefault();
+
+    var rating = $(this).parent();
+    var ul = $(this);
+    var touch = e.originalEvent.touches[0];
+    var deltaX = Math.abs(touch.clientX - touchStartX);
+    var deltaY = Math.abs(touch.clientY - touchStartY);
+
+    if (deltaX > 10 && deltaX > deltaY) {
+      isDragging = true;
+
+      var elementAtPoint = document.elementFromPoint(
+        touch.clientX,
+        touch.clientY
+      );
+      var starLi = $(elementAtPoint).closest("li");
+
+      if (starLi.length && starLi.parent().is(ul)) {
+        var hoverRating = starLi.data("rating");
+
+        ul.children("li").each(function (index) {
+          $(this).toggleClass("hover", index < hoverRating);
+        });
+
+        var tooltip = rating.find(".rating-tooltip");
+        if (tooltip.length) {
+          var maxRating = parseInt(rating.attr("data-max")) || 5;
+          updateRatingTooltip(tooltip, hoverRating, maxRating);
+          tooltip.addClass("show");
+        }
+      }
+    }
+  }
+);
+
+$(document).on(
+  "touchend",
+  ".form-elements .rating:not(.disabled) ul",
+  function (e) {
+    var rating = $(this).parent();
+    var ul = $(this);
+    var touch = e.originalEvent.changedTouches[0];
+    var touchEndTime = Date.now();
+    var touchDuration = touchEndTime - touchStartTime;
+
+    var tooltip = rating.find(".rating-tooltip");
+    if (tooltip.length) {
+      tooltip.removeClass("show");
+    }
+
+    ul.children("li").removeClass("hover");
+
+    if (isDragging) {
+      var elementAtPoint = document.elementFromPoint(
+        touch.clientX,
+        touch.clientY
+      );
+      var starLi = $(elementAtPoint).closest("li");
+
+      if (starLi.length && starLi.parent().is(ul)) {
+        starLi.click();
+      }
+    } else {
+      var deltaX = Math.abs(touch.clientX - touchStartX);
+      var deltaY = Math.abs(touch.clientY - touchStartY);
+
+      if (deltaX < 10 && deltaY < 10 && touchDuration < 300) {
+        var elementAtPoint = document.elementFromPoint(
+          touch.clientX,
+          touch.clientY
+        );
+        var starLi = $(elementAtPoint).closest("li");
+
+        if (starLi.length && starLi.parent().is(ul)) {
+          starLi.click();
+        }
+      }
+    }
+
+    isDragging = false;
+  }
+);
+
+$(document).on("reset", "form", function () {
+  var form = $(this);
+  setTimeout(function () {
+    form.find(".rating").each(function () {
+      var rating = $(this);
+      var hiddenInput = rating.siblings('input[type="hidden"]');
+      var originalValue = parseInt(hiddenInput.prop("defaultValue")) || 0;
+
+      setRating(rating, originalValue);
+
+      rating.removeClass("rating-error");
+      rating.closest(".form-elements").removeClass("has-error");
+      rating.closest(".form-elements").find(".error-message").remove();
+    });
+  }, 0);
+});
+
+function announceToScreenReader(message) {
+  var announcement = $("<div>")
+    .attr({
+      "aria-live": "polite",
+      "aria-atomic": "true",
+      class: "sr-only",
+    })
+    .text(message);
+
+  $("body").append(announcement);
+
+  setTimeout(function () {
+    announcement.remove();
+  }, 1000);
+}
+
+function updateRatingTooltip(tooltip, rating, maxRating) {
+  var ratingContainer = tooltip.closest(".rating");
+  var customTooltips = ratingContainer.data("tooltip-texts");
+  var tooltipTexts;
+
+  if (customTooltips && typeof customTooltips === "object") {
+    tooltipTexts = customTooltips;
+  } else {
+    if (maxRating === 5) {
+      tooltipTexts = {
+        1: "Poor",
+        2: "Fair",
+        3: "Good",
+        4: "Very Good",
+        5: "Excellent",
+      };
+    } else if (maxRating === 10) {
+      tooltipTexts = {
+        1: "Terrible",
+        2: "Poor",
+        3: "Below Average",
+        4: "Fair",
+        5: "Average",
+        6: "Above Average",
+        7: "Good",
+        8: "Very Good",
+        9: "Great",
+        10: "Perfect",
+      };
+    } else {
+      tooltipTexts = {};
+      for (var i = 1; i <= maxRating; i++) {
+        tooltipTexts[i] = i + " out of " + maxRating;
+      }
+    }
+  }
+
+  var text = tooltipTexts[rating] || rating + " stars";
+  tooltip.text(text);
+}
+
+function generateStars(maxRating, currentRating) {
+  var starsHTML = "";
+  for (var i = 1; i <= maxRating; i++) {
+    var isActive = i <= currentRating;
+    var currentClass = isActive ? "current" : "";
+    var spanHTML = i > 3 ? "<span></span>" : "";
+
+    starsHTML += `
+      <li class="${currentClass}" data-rating="${i}" role="button" tabindex="0" aria-label="Rate ${i} out of ${maxRating} stars" aria-pressed="${isActive}">
+        ${spanHTML}
+        <svg aria-hidden="true">
+          <use xlink:href="#star"></use>
+        </svg>
+      </li>
+    `;
+  }
+  return starsHTML;
+}
+
+function setRating(ratingElement, value) {
+  var rating = $(ratingElement);
+  var ul = rating.find("ul");
+  var hiddenInput = rating.siblings('input[type="hidden"]');
+  var maxRating = parseInt(rating.attr("data-max")) || 5;
+
+  value = Math.max(0, Math.min(value, maxRating));
+
+  hiddenInput.val(value).trigger("change");
+  rating.attr("data-rating", value);
+
+  ul.find("li").each(function (index) {
+    $(this).toggleClass("current", index < value);
+  });
+
+  rating.trigger("rating:change", [value, maxRating]);
+}
+
+function getRating(ratingElement) {
+  var rating = $(ratingElement);
+  var hiddenInput = rating.siblings('input[type="hidden"]');
+  return parseInt(hiddenInput.val()) || 0;
+}
+
+function toggleRatingDisabled(ratingElement, disabled) {
+  var rating = $(ratingElement);
+  var hiddenInput = rating.siblings('input[type="hidden"]');
+
+  if (disabled) {
+    rating.addClass("disabled");
+    hiddenInput.prop("disabled", true);
+    rating.find("ul li").attr("tabindex", "-1");
+  } else {
+    rating.removeClass("disabled");
+    hiddenInput.prop("disabled", false);
+    rating.find("ul li").attr("tabindex", "0");
+  }
+}
+
 function searchParentsBackgroundColor(childElement) {
   var parentElement = childElement.parent();
   if (parentElement.length > 0) {
@@ -2926,3 +3582,96 @@ var notifyPersistent = new Notify({
   persistent: !0,
   hideCloseButton: !1,
 });
+
+window.RatingAPI = {
+  setValue: function (selector, value) {
+    $(selector).each(function () {
+      setRating(this, value);
+    });
+  },
+
+  getValue: function (selector) {
+    var element = $(selector).first();
+    return getRating(element);
+  },
+
+  setDisabled: function (selector, disabled) {
+    $(selector).each(function () {
+      toggleRatingDisabled(this, disabled);
+    });
+  },
+
+  reset: function (selector) {
+    $(selector).each(function () {
+      setRating(this, 0);
+    });
+  },
+
+  setSize: function (selector, size) {
+    $(selector).each(function () {
+      var rating = $(this);
+      rating.removeClass("rating-xs rating-sm rating-lg rating-xl");
+      if (size && ["xs", "sm", "lg", "xl"].includes(size)) {
+        rating.addClass("rating-" + size);
+      }
+    });
+  },
+
+  setTheme: function (selector, theme) {
+    $(selector).each(function () {
+      var rating = $(this);
+      rating.removeClass(
+        "rating-primary rating-success rating-warning rating-danger rating-info rating-secondary rating-dark rating-light"
+      );
+      if (
+        theme &&
+        [
+          "primary",
+          "success",
+          "warning",
+          "danger",
+          "info",
+          "secondary",
+          "dark",
+          "light",
+        ].includes(theme)
+      ) {
+        rating.addClass("rating-" + theme);
+      }
+    });
+  },
+
+  getFormRatings: function (formSelector) {
+    var ratings = {};
+    $(formSelector)
+      .find(".rating")
+      .each(function () {
+        var hiddenInput = $(this).siblings('input[type="hidden"]');
+        var name = hiddenInput.attr("name");
+        if (name) {
+          ratings[name] = parseInt(hiddenInput.val()) || 0;
+        }
+      });
+    return ratings;
+  },
+
+  setFormRatings: function (formSelector, ratingsObject) {
+    $(formSelector)
+      .find(".rating")
+      .each(function () {
+        var hiddenInput = $(this).siblings('input[type="hidden"]');
+        var name = hiddenInput.attr("name");
+        if (name && ratingsObject.hasOwnProperty(name)) {
+          setRating(this, ratingsObject[name]);
+        }
+      });
+  },
+
+  on: function (selector, event, callback) {
+    $(document).on(event, selector, callback);
+  },
+
+  off: function (selector, event) {
+    $(document).off(event, selector);
+  },
+};

@@ -8,9 +8,15 @@
 .form-elements .rating {
   --active: #EEC900;
   --active-pale: rgba(238, 201, 0, .80);
-  --inactive: #121621;
+  --inactive: rgba(218, 218, 218, .50);
   --face-active: #121621;
-  --face-inactive: rgba(238, 201, 0, .70);;
+  --face-inactive: rgba(0, 0, 0, .45);
+
+  --selected: #EEC900;
+  --selected-pale: rgba(238, 201, 0, .90);
+  --previous: #FFF4A3;
+  --previous-pale: rgba(255, 244, 163, .50);
+  --previous-face: rgba(18, 22, 33, .70);
 
   --star-width: 36px;
   --star-height: 34px;
@@ -62,6 +68,7 @@
   --face: var(--face-inactive);
   cursor: pointer;
   position: relative;
+  z-index: 2;
 }
 
 .form-elements .rating ul li:before,
@@ -207,11 +214,17 @@
   position: absolute;
   display: none;
   transform: translateX(var(--x));
-  transition: transform 0.3s cubic-bezier(0, 0, 0.265, 1.1) 0.24s;
+  pointer-events: none;
+  transition: transform 0.3s cubic-bezier(0, 0, 0.265, 1.1) 0.2s;
 }
 
 .form-elements .rating>div span {
   display: block;
+}
+
+.form-elements .rating>div.previous span svg {
+  color: var(--previous);
+  fill: rgba(0, 0, 0, 0.1);
 }
 
 .form-elements .rating>div span svg {
@@ -259,6 +272,12 @@
 
 .form-elements .rating.animate-right>div span svg {
   animation: right 0.3s ease, left-end 0.4s ease 0.4s;
+}
+
+.form-elements .rating ul li.previous.hover svg {
+  color: var(--previous);
+  opacity: 0.8;
+  transform: scale(1.05);
 }
 
 .form-elements .rating ul li.hover svg {
@@ -521,6 +540,16 @@
   color: var(--error-color);
 }
 
+.form-elements .rating ul li.previous {
+  --face: var(--previous-face);
+}
+
+.form-elements .rating ul li.previous svg {
+  color: var(--previous);
+  fill: rgba(0, 0, 0, 0.1);
+  opacity: 0.7;
+}
+
 .form-elements .rating.rating-loading {
   pointer-events: none;
   opacity: 0.7;
@@ -639,8 +668,9 @@
 
 .form-elements .rating.animate-left>div,
 .form-elements .rating.animate-right>div {
-  /* will-change: transform; */
-  display: none !important;
+  will-change: transform;
+  /* display: none !important; */
+  display: block !important;
 }
 
 .form-elements .rating {
@@ -648,8 +678,7 @@
 }
 
 .form-elements .rating>div {
-  display: none;
-  /* z-index: 2; */
+  z-index: 1;
 }
 
 .form-elements .rating-tooltip {
